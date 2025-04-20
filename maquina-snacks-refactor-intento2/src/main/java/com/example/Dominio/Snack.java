@@ -129,5 +129,13 @@ public class Snack implements Serializable {
             return false;
         return true;
     }
+
+    // metodo para mostrar la cantidad disponible 
+    public boolean cantidadDisponible(){
+        if (cantidad > 0){
+            return true;
+        }
+      return false;
+    }
    
 }

@@ -9,4 +9,6 @@ public interface IservicioSnakcs {
     void agregarSnack(Snack snack);
     void mostrarSnacks();
     Table<Integer,String,Snack> getSnacks();
+    boolean comprarSnack(int id);
+    Snack comprarSnack2(int id);
 }
