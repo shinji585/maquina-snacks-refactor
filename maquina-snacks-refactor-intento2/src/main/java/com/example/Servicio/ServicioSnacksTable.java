@@ -1,81 +1,117 @@
 package com.example.Servicio;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 import com.example.Dominio.Snack;
-import com.google.common.collect.Table;
-import com.google.common.collect.TreeBasedTable;
 
-public class ServicioSnacksTable implements IservicioSnakcs {
-    private static final Table<Integer, String, Snack> snacks;
-
-    // Bloque de inicialización estática para cargar snacks iniciales
-    static {
-        snacks = TreeBasedTable.create();
-        snacks.put(1, "Chocolatina", new Snack(2.50, "Chocolatina", 10, "Dulce"));
-        snacks.put(2, "Galletas", new Snack(1.80, "Galletas", 15, "Dulce"));
-        snacks.put(3, "Doritos", new Snack(3.00, "Doritos", 8, "Salado"));
-        System.out.println("Snacks cargados: " + snacks.size());
-    }
-
-    @Override
-    public void agregarSnack(Snack snack) {
-        // Verificamos que no haya un snack con el mismo ID
-        if (snacks.contains(snack.getIdSnack(), snack.getNombre())) {
-            System.out.println("Ya existe un snack con este ID y nombre.");
-        } else {
-            snacks.put(snack.getIdSnack(), snack.getNombre(), snack);
-            System.out.println("Snack agregado correctamente: " + snack.getNombre());
-        }
-    }
-
-    @Override
-    public void mostrarSnacks() {
-        System.out.println("----- Snacks en el inventario -----");
-        if (snacks.isEmpty()) {
-            System.out.println("No hay snacks cargados.");
-        } else {
-            for (Table.Cell<Integer, String, Snack> celda : snacks.cellSet()) {
-                Integer cID = celda.getRowKey();
-                String nombre = celda.getColumnKey();
-                Snack snack = celda.getValue();
-
-                System.out.printf("ID: %d | Nombre: %s | Precio: %.2f | Cantidad: %d | Tipo: %s\n",
-                        cID, nombre, snack.getPrecio(), snack.getCantidad(), snack.getTipo());
-            }
-        }
-    }
-
-    @Override
-    public Table<Integer, String, Snack> getSnacks() {
-        return snacks;
-    }
-
-    @Override
-    public boolean comprarSnack(int id) {
-        // Buscamos el snack por ID
-        for (Table.Cell<Integer, String, Snack> celda : snacks.cellSet()) {
-            if (celda.getRowKey() == id) {
-                Snack snack = celda.getValue();
-
-                // Verificamos si hay stock disponible
-                if (snack.getCantidad() > 0) {
-                    snack.setCantidad(snack.getCantidad() - 1); // Reducimos la cantidad
-                    System.out.println("Compra realizada con éxito! Has comprado: " + snack.getNombre());
-                    return true;
-                } else {
-                    System.out.println("Lo sentimos, no hay stock disponible de ese snack.");
-                    return false;
-                }
-            }
-        }
-        System.out.println("Snack con ID " + id + " no encontrado.");
-        return false;
-    }
-
-    @Override
-    public Snack comprarSnack2(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'comprarSnack2'");
-    }
-
+public class ServicioSnacksTable{
+   
+    // implementamos metodos que estaban en presentacion para tener una separacion de logica 
+      public  void comprarSnack(Scanner s, List<Snack> productos, IservicioSnakcs serviciosnacks) {
+        System.out.print("¿Quieres comprar un snack? (si/no): ");
+        String respuesta = s.nextLine().trim().toLowerCase();
     
+        if (respuesta.equals("si")) {
+            System.out.print("¿Qué snack quieres comprar (id)?: ");
+            int idSnack = Integer.parseInt(s.nextLine());
+    
+            // Usar comprarSnack2 que devuelve el Snack comprado
+            Snack snackComprado = serviciosnacks.comprarSnack2(idSnack);
+    
+            // Si la compra fue exitosa, agregamos el snack a la lista de productos
+            if (snackComprado != null) {
+                // Creamos un nuevo objeto Snack para agregarlo a la lista y evitar problemas de referencia
+                Snack snackParaLista = new Snack(
+                    snackComprado.getIdSnack(),
+                    snackComprado.getPrecio(),
+                    snackComprado.getNombre(),
+                    1, // Cantidad 1 porque compramos uno
+                    snackComprado.getTipo()
+                );
+                productos.add(snackParaLista);
+                System.out.println("Compra realizada con éxito. Snack agregado al ticket.");
+            } else {
+                System.out.println("No se pudo realizar la compra.");
+            }
+        } else {
+            System.out.println("No se ha realizado ninguna compra.");
+        }
+    }
+    
+     public  void mostrarTicket(List<Snack> productos) {
+        String ticket = "*** Ticket de Venta ***\n";
+        double total = 0;
+        Map<String, Integer> cantidadSnacks = new HashMap<>();
+    
+        // Contabiliza las cantidades de cada snack
+        for (Snack snack : productos) {
+            cantidadSnacks.put(snack.getNombre(), cantidadSnacks.getOrDefault(snack.getNombre(), 0) + 1);
+        }
+    
+        // Muestra los snacks y sus cantidades
+        for (Map.Entry<String, Integer> entry : cantidadSnacks.entrySet()) {
+            String nombreSnack = entry.getKey();
+            int cantidad = entry.getValue();
+            double precioSnack = productos.stream()
+                    .filter(snack -> snack.getNombre().equals(nombreSnack))
+                    .findFirst()
+                    .get()
+                    .getPrecio();
+            ticket += "\n\t- " + nombreSnack + " x" + cantidad + " - $" + precioSnack * cantidad;
+            total += precioSnack * cantidad;
+        }
+    
+        ticket += "\n\tTotal -> $" + total;
+        System.out.println(ticket);
+    }
+
+    public  void agregarSnack(Scanner s, IservicioSnakcs sIservicioSnakcs) {
+        System.out.print("Ingrese el nombre del snack nuevo: ");
+        String nombre = s.nextLine();
+        
+        double precio = 0;
+        // Validación del precio
+        while (true) {
+            System.out.print("Ingrese el precio del snack nuevo: ");
+            try {
+                precio = Double.parseDouble(s.nextLine());
+                if (precio <= 0) {
+                    System.out.println("El precio debe ser mayor que cero. Intenta de nuevo.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un valor numérico válido.");
+            }
+        }
+        
+        int cantidad = 0;
+        // Validación de la cantidad
+        while (true) {
+            System.out.print("Ingrese la cantidad del producto a agregar: ");
+            try {
+                cantidad = Integer.parseInt(s.nextLine());
+                if (cantidad <= 0) {
+                    System.out.println("La cantidad debe ser mayor que cero. Intenta de nuevo.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un valor numérico válido.");
+            }
+        }
+        
+        System.out.print("Ingrese el tipo de producto a agregar: ");
+        String tipo = s.nextLine();
+    
+        // Agregar el snack
+        sIservicioSnakcs.agregarSnack(new Snack(precio, nombre, cantidad, tipo));
+        System.out.println("¡Tu snack se ha agregado correctamente!");
+    
+        // Mostrar snacks actualizados
+        sIservicioSnakcs.mostrarSnacks();
+    } 
 }

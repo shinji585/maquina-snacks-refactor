@@ -4,7 +4,7 @@
       "precio": 70.0,
       "nombre": "Papas fritas",
       "idSnack": 1,
-      "cantidad": 4,
+      "cantidad": 3,
       "tipo": "Barbacoa"
     }
   },
@@ -13,7 +13,7 @@
       "precio": 50.0,
       "nombre": "Postobon",
       "idSnack": 2,
-      "cantidad": 18,
+      "cantidad": 16,
       "tipo": "Manzana"
     }
   },
