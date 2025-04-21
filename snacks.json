@@ -22,17 +22,17 @@
       "precio": 120.0,
       "nombre": "Sandwich",
       "idSnack": 3,
-      "cantidad": 11,
+      "cantidad": 12,
       "tipo": "Jamon y Queso"
     }
   },
-  "5": {
-    "cocosette": {
-      "precio": 12.0,
-      "nombre": "cocosette",
-      "idSnack": 5,
-      "cantidad": 11,
-      "tipo": "dulce"
+  "6": {
+    "festival": {
+      "precio": 15.0,
+      "nombre": "festival",
+      "idSnack": 6,
+      "cantidad": 3,
+      "tipo": "galleta dulce"
     }
   }
 }
