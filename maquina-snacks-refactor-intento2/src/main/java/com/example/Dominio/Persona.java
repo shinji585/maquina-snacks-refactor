@@ -16,6 +16,9 @@ public class Persona {
     private static int contadorPersona = 1;
 
 
+    public Persona(){}
+
+
     public Persona(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,
             String correoElectronico, int numeroTelefono) {
         this.nombre = nombre;
