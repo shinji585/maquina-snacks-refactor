@@ -32,24 +32,40 @@ public class ServicioClienteArchivo implements IservicioCliente {
     private Gson gson;
     private Map<Integer, Cliente> clientes;
     private Map<Integer,Compra> compras; 
-
     public ServicioClienteArchivo() {
         boolean existe = false;
         clientes = new HashMap<>();
         compras = new HashMap<>();
         archivo = new File(ARCHIVO_CLIENTE_JSON);
+       
+        // creamos un gson personalizado con los adaptadores necesarios
+        GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+    
+        // registrar el adaptador para localdatetime 
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
+    
+        // registrar el adaptador para Table
+        Type tableType = new TypeToken<Table<LocalDateTime, Integer, Compra>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(tableType, 
+            new TableTypeAdapter<>(LocalDateTime.class, Integer.class, Compra.class));
+    
+        // establecemos el gson
+        this.gson = gsonBuilder.create();
+    
         try {
             existe = archivo.exists();
             if (existe) {
                 cargarClientes();
             } else {
                 // se crea el archivo en caso de que no exista
-                FileWriter fw = new FileWriter(archivo, true);
+                FileWriter fw = new FileWriter(archivo);
+                fw.write("{}"); // Inicializar con un JSON válido vacío
                 fw.close();
                 System.out.println("se ha creado con exito el archivo");
             }
         } catch (Exception e) {
             System.out.println("error de tipo: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +74,8 @@ public class ServicioClienteArchivo implements IservicioCliente {
         File arFile = new File(ARCHIVO_CLIENTE_JSON);
         if (arFile.exists()) {
             try (FileReader fr = new FileReader(arFile)) {
-                gson = new GsonBuilder().setPrettyPrinting().create();
+                // usamos el gson que ya tiene adaptadores registrados
+                // no creamos uno nuevo 
 
                 // Intenta leer primero el contenido como String
                 StringBuilder jsonContent = new StringBuilder();
@@ -119,36 +136,59 @@ public class ServicioClienteArchivo implements IservicioCliente {
     public boolean registrarCliente(Cliente cliente) {
         boolean estado = false;
         if (cliente != null){
-           estado =  agregarClienteArchivo();
+            clientes.put(cliente.getID(), cliente);
+            this.agregarClienteArchivo();
+            estado = true;
         }
         return estado;
     }
-
-    private boolean agregarClienteArchivo() {
-        boolean estado = false;
-        archivo = new File(ARCHIVO_CLIENTE_JSON);
-        try (FileWriter fWriter = new FileWriter(archivo)) {
-            gson = new GsonBuilder().setPrettyPrinting().create();
-            // serializamos los clientes
-            String json = gson.toJson(clientes);
-
-            // verificamos que el json generado sea correcto
-            try {
-                gson.fromJson(json, Object.class);
-            } catch (Exception e) {
-                System.out.println("Error: Se generó un JSON inválido. Usando formato alternativo.");
-                // Crear un JSON alternativo más simple
-                Map<Integer, Cliente> clientesMap = new HashMap<>();
-                for (Map.Entry<Integer,Cliente> clientes : clientes.entrySet() ) {
-                    clientesMap.put(clientes.getKey(), clientes.getValue());
+    
+  
+    private void agregarClienteArchivo() {
+        this.archivo = new File(ARCHIVO_CLIENTE_JSON);
+        try {
+            // Primero cargar los clientes existentes (si los hay)
+            Map<Integer, Cliente> clientesExistentes = new HashMap<>();
+            if (archivo.exists() && archivo.length() > 0) {
+                try (FileReader fileReader = new FileReader(archivo)) {
+                    Type tipoMapa = new TypeToken<Map<Integer, Cliente>>(){}.getType();
+                    String contenido = readFile(fileReader);
+                    if (!contenido.isEmpty() && !contenido.equals("{}")) {
+                        clientesExistentes = gson.fromJson(contenido, tipoMapa);
+                        if (clientesExistentes == null) {
+                            clientesExistentes = new HashMap<>();
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error al leer clientes existentes: " + e.getMessage());
+                    // Si hay error en la lectura, simplemente continuamos con un mapa vacío
+                    clientesExistentes = new HashMap<>();
                 }
-                json = gson.toJson(clientesMap);
-                estado = true;
+            }
+            
+            // Ahora combinamos los clientes existentes con los nuevos
+            clientesExistentes.putAll(clientes);
+            
+            // Escribimos todo de vuelta al archivo
+            try (FileWriter fWriter = new FileWriter(this.archivo)) {
+                String json = this.gson.toJson(clientesExistentes);
+                fWriter.write(json);
             }
         } catch (Exception e) {
-            System.out.println("error de tipo: " + e.getLocalizedMessage());
+            System.out.println("Error al escribir en el archivo: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
-        return estado;
+    }
+    
+    // Método auxiliar para leer el contenido de un archivo
+    private String readFile(FileReader reader) throws IOException {
+        StringBuilder content = new StringBuilder();
+        char[] buffer = new char[1024];
+        int length;
+        while ((length = reader.read(buffer)) != -1) {
+            content.append(buffer, 0, length);
+        }
+        return content.toString();
     }
 
     @Override

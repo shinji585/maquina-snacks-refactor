@@ -25,10 +25,11 @@ public class Cliente extends Persona {
 
     public Cliente(){
         inicializadorCliente();
+        this.saldo = BigDecimal.ZERO;
     }
 
     // constructo para definir los datos del cliente 
-    public Cliente(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,String correoElectronico, int numeroTelefono,BigDecimal saldo) throws Exception {
+    public Cliente(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,String correoElectronico, long numeroTelefono,BigDecimal saldo) throws Exception {
         super(nombre, edad, apellidos, sexo, nacionalidad, direccion, correoElectronico, numeroTelefono);
         inicializadorCliente();
         if ( saldo.compareTo(BigDecimal.ZERO) < 0){
@@ -43,7 +44,10 @@ public class Cliente extends Persona {
         if (monto.compareTo(BigDecimal.ZERO) < 0){
             throw new Exception("no se puede agregar al saldo un valor negativo");
         }else{
-           this.saldo =  this.saldo.add(monto);
+           if (this.saldo == null){
+            this.saldo = BigDecimal.ZERO;
+           }
+           this.saldo = this.saldo.add(monto);
         }
     }
 
