@@ -67,11 +67,13 @@ public class Cliente extends Persona {
     }
 
     // creamos el metodo para agregarcomprahistorial
-    public void agregarcomprahistorial(Compra compra){
+    public boolean agregarcomprahistorial(Compra compra){
         if (!compra.getDetalles().isEmpty() && compra != null){
              // si no esta vacio agregamos a la tabla 
              historialCompras.put(compra.getfecha(), compra.getIDCompra(), compra);
+             return true;
         }
+        return false;
     }
 
     // creamos la clase verhistorial 

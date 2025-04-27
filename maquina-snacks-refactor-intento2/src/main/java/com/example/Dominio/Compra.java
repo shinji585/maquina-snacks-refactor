@@ -27,12 +27,10 @@ public class Compra {
   }
 
   // creamos los metdos
-  public boolean agregarSnack(Snack snack) {
+  public void agregarSnack(Snack snack) {
     if (snack != null && snack.getCantidad() > 0) {
       snacksComprados.put(snack.getIdSnack(), snack.getNombre(), snack);
-      return true;
     }
-    return false;
   }
 
   // creamos la clase calcular el total de la compra

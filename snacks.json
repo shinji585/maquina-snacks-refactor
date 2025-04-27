@@ -34,5 +34,21 @@
       "cantidad": 3,
       "tipo": "galleta dulce"
     }
+  },
+  "0": {
+    "Papas fritas": {
+      "precio": 1.5,
+      "nombre": "Papas fritas",
+      "idSnack": 0,
+      "cantidad": 0,
+      "tipo": "Salado"
+    },
+    "Chocolate": {
+      "precio": 2.0,
+      "nombre": "Chocolate",
+      "idSnack": 0,
+      "cantidad": 0,
+      "tipo": "Dulce"
+    }
   }
 }
