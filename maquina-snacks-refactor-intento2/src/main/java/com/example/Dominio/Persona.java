@@ -11,20 +11,26 @@ public class Persona {
     private String nacionalidad; 
     private String direccion;
     private String correoElectronico;
-    private int numeroTelefono;
+    private long numeroTelefono;
     private int idPersona;
     private static int contadorPersona = 1;
+    private String sexoString;
 
 
     public Persona(){}
 
 
     public Persona(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,
-            String correoElectronico, int numeroTelefono) {
+            String correoElectronico, long numeroTelefono) {
         this.nombre = nombre;
         this.edad = edad;
         this.apellidos = apellidos;
         this.sexo = sexo;
+        if (this.sexo == true){
+          this.sexoString = "MASCULINO";
+        }else{
+            this.sexoString = "FEMENINO";
+        }
         this.nacionalidad = nacionalidad;
         this.direccion = direccion;
         this.correoElectronico = correoElectronico;
@@ -61,6 +67,14 @@ public class Persona {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public void setSEXOString(String sexo){
+        this.sexoString = sexo;
+    }
+
+    public String getSEXOString(){
+        return this.sexoString;
     }
 
 
@@ -104,12 +118,12 @@ public class Persona {
     }
 
 
-    public int getNumeroTelefono() {
+    public long getNumeroTelefono() {
         return numeroTelefono;
     }
 
 
-    public void setNumeroTelefono(int numeroTelefono) {
+    public void setNumeroTelefono(long numeroTelefono) {
         this.numeroTelefono = numeroTelefono;
     }
 
@@ -130,7 +144,7 @@ public class Persona {
         result = prime * result + ((nacionalidad == null) ? 0 : nacionalidad.hashCode());
         result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
         result = prime * result + ((correoElectronico == null) ? 0 : correoElectronico.hashCode());
-        result = prime * result + numeroTelefono;
+        result = prime * result + (int) (numeroTelefono ^ (numeroTelefono >>> 32));
         result = prime * result + idPersona;
         return result;
     }

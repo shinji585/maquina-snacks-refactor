@@ -1,0 +1,53 @@
+{
+  "1": {
+    "clienteID": 1,
+    "saldo": 1000,
+    "historialCompras": {
+      "\"2025-05-01T21:43:59.9391901\"|||1": {
+        "Idcompra": 1,
+        "fecha": "2025-05-01T21:43:59.9391901",
+        "snacksComprados": {},
+        "cliente": {
+          "clienteID": 1,
+          "saldo": 998.75,
+          "historialCompras": {},
+          "nombre": "samuel ",
+          "edad": 19,
+          "apellidos": "vargas cardenas",
+          "sexo": true,
+          "nacionalidad": "colombiano ",
+          "direccion": "olaya herrera",
+          "correoElectronico": "vargassamuel@gmail.com",
+          "numeroTelefono": 314782457,
+          "idPersona": 1,
+          "sexoString": "MASCULINO"
+        }
+      }
+    },
+    "nombre": "samuel ",
+    "edad": 19,
+    "apellidos": "vargas cardenas",
+    "sexo": true,
+    "nacionalidad": "colombiano ",
+    "direccion": "olaya herrera",
+    "correoElectronico": "vargassamuel@gmail.com",
+    "numeroTelefono": 314782457,
+    "idPersona": 1,
+    "sexoString": "MASCULINO"
+  },
+  "2": {
+    "clienteID": 2,
+    "saldo": 1200,
+    "historialCompras": {},
+    "nombre": "martha luz ",
+    "edad": 42,
+    "apellidos": "cardenas cruz",
+    "sexo": false,
+    "nacionalidad": "colombiana ",
+    "direccion": "13 de junio",
+    "correoElectronico": "marthaluz@gmil.com",
+    "numeroTelefono": 314785455,
+    "idPersona": 1,
+    "sexoString": "FEMENINO"
+  }
+}

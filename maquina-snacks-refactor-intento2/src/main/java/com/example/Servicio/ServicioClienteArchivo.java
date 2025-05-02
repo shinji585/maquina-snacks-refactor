@@ -9,12 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import com.example.Dominio.Cliente;
 import com.example.Dominio.Compra;
@@ -32,24 +26,43 @@ public class ServicioClienteArchivo implements IservicioCliente {
     private Gson gson;
     private Map<Integer, Cliente> clientes;
     private Map<Integer,Compra> compras; 
-
+    private PDFGeneratorService pdfService;
+    
     public ServicioClienteArchivo() {
         boolean existe = false;
         clientes = new HashMap<>();
         compras = new HashMap<>();
         archivo = new File(ARCHIVO_CLIENTE_JSON);
+        pdfService = new PDFGeneratorService();
+       
+        // creamos un gson personalizado con los adaptadores necesarios
+        GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+    
+        // registrar el adaptador para localdatetime 
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
+    
+        // registrar el adaptador para Table
+        Type tableType = new TypeToken<Table<LocalDateTime, Integer, Compra>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(tableType, 
+            new TableTypeAdapter<>(LocalDateTime.class, Integer.class, Compra.class));
+    
+        // establecemos el gson
+        this.gson = gsonBuilder.create();
+    
         try {
             existe = archivo.exists();
             if (existe) {
                 cargarClientes();
             } else {
                 // se crea el archivo en caso de que no exista
-                FileWriter fw = new FileWriter(archivo, true);
+                FileWriter fw = new FileWriter(archivo);
+                fw.write("{}"); // Inicializar con un JSON válido vacío
                 fw.close();
                 System.out.println("se ha creado con exito el archivo");
             }
         } catch (Exception e) {
             System.out.println("error de tipo: " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +71,8 @@ public class ServicioClienteArchivo implements IservicioCliente {
         File arFile = new File(ARCHIVO_CLIENTE_JSON);
         if (arFile.exists()) {
             try (FileReader fr = new FileReader(arFile)) {
-                gson = new GsonBuilder().setPrettyPrinting().create();
+                // usamos el gson que ya tiene adaptadores registrados
+                // no creamos uno nuevo 
 
                 // Intenta leer primero el contenido como String
                 StringBuilder jsonContent = new StringBuilder();
@@ -119,245 +133,182 @@ public class ServicioClienteArchivo implements IservicioCliente {
     public boolean registrarCliente(Cliente cliente) {
         boolean estado = false;
         if (cliente != null){
-           estado =  agregarClienteArchivo();
+            clientes.put(cliente.getID(), cliente);
+            this.agregarClienteArchivo();
+            estado = true;
         }
         return estado;
     }
-
-    private boolean agregarClienteArchivo() {
-        boolean estado = false;
-        archivo = new File(ARCHIVO_CLIENTE_JSON);
-        try (FileWriter fWriter = new FileWriter(archivo)) {
-            gson = new GsonBuilder().setPrettyPrinting().create();
-            // serializamos los clientes
-            String json = gson.toJson(clientes);
-
-            // verificamos que el json generado sea correcto
-            try {
-                gson.fromJson(json, Object.class);
-            } catch (Exception e) {
-                System.out.println("Error: Se generó un JSON inválido. Usando formato alternativo.");
-                // Crear un JSON alternativo más simple
-                Map<Integer, Cliente> clientesMap = new HashMap<>();
-                for (Map.Entry<Integer,Cliente> clientes : clientes.entrySet() ) {
-                    clientesMap.put(clientes.getKey(), clientes.getValue());
+    
+  
+    private void agregarClienteArchivo() {
+        this.archivo = new File(ARCHIVO_CLIENTE_JSON);
+        try {
+            // Primero cargar los clientes existentes (si los hay)
+            Map<Integer, Cliente> clientesExistentes = new HashMap<>();
+            if (archivo.exists() && archivo.length() > 0) {
+                try (FileReader fileReader = new FileReader(archivo)) {
+                    Type tipoMapa = new TypeToken<Map<Integer, Cliente>>() {}.getType();
+                    Map<Integer, Cliente> mapaCargado = gson.fromJson(fileReader, tipoMapa);
+                    if (mapaCargado != null) {
+                        clientesExistentes = mapaCargado;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error al cargar clientes existentes: " + e.getMessage());
                 }
-                json = gson.toJson(clientesMap);
-                estado = true;
+            }
+            
+            // Actualizar el mapa con los nuevos clientes
+            clientesExistentes.putAll(clientes);
+            
+            // Guardar el mapa actualizado
+            try (FileWriter writer = new FileWriter(archivo)) {
+                gson.toJson(clientesExistentes, writer);
+                System.out.println("Cliente(s) agregado(s) al archivo exitosamente.");
             }
         } catch (Exception e) {
-            System.out.println("error de tipo: " + e.getLocalizedMessage());
+            System.out.println("Error al agregar cliente al archivo: " + e.getMessage());
+            e.printStackTrace();
         }
-        return estado;
     }
 
     @Override
-    public Cliente buscarCliente(int idCliente) {
-        Cliente envioCliente = new Cliente();
-        for (Map.Entry<Integer,Cliente> clienteEntry : clientes.entrySet()) {
-            if (clienteEntry.getKey() == idCliente){
-                envioCliente = clienteEntry.getValue();
+    public Cliente obtenerClientePorID(Integer id) {
+        return clientes.get(id);
+    }
+
+    @Override
+    public Map<Integer, Cliente> obtenerTodosLosClientes() {
+        return new HashMap<>(clientes);
+    }
+
+    @Override
+    public boolean actualizarCliente(Cliente cliente) {
+        boolean resultado = false;
+        if (cliente != null && cliente.getID() > 0) {  // Cambiado de getID() != null a getID() > 0
+            // Verificar si el cliente existe
+            if (clientes.containsKey(cliente.getID())) {
+                clientes.put(cliente.getID(), cliente);
+                agregarClienteArchivo();
+                resultado = true;
             }
         }
-        return envioCliente;
+        return resultado;
     }
 
     @Override
-    public boolean realizarCompra(int idcliente, int idsnack) {
-        IservicioSnakcs snakcs = new ServicioSnacksArchivo();
-        boolean estado = false; 
-        // buscamos los clientes almacenados en la tabla o el archivo 
-        Optional<Cliente> clienteOptional = clientes.values()  // obtine los valores del map 
-        .stream()  // comienza un stream (un clujo de datos)
-        .filter(cliente -> cliente.getID() == idcliente) // busca el cliente con el cual tenga el mismo id que se ha ingresado 
-        .findFirst(); // encuentra el primero 
-    
-        if (clienteOptional.isPresent()) {
-            // creamos un objeto de tipo snack
-            Snack snack = new Snack();
-            // verificamos si el snack ingresado está presente en el servicio de archivos 
-            for (Table.Cell<Integer, String, Snack> snakcsTable : snakcs.getSnacks().cellSet()) {
-                if (snakcsTable.getRowKey() == idsnack) {
-                    snack = snakcsTable.getValue();
-                }
+    public boolean eliminarCliente(Integer id) {
+        boolean resultado = false;
+        if (id != null && clientes.containsKey(id)) {
+            clientes.remove(id);
+            agregarClienteArchivo();
+            resultado = true;
+        }
+        return resultado;
+    }
+
+    @Override
+    public boolean registrarCompra(Cliente cliente, Compra compra) {
+        boolean resultado = false;
+        if (cliente != null && compra != null) {
+            // Asignar la compra al cliente
+            // Usamos el método modificado verhistorialCompras() que no lanza excepciones
+            Table<LocalDateTime, Integer, Compra> historial = cliente.verhistorialCompras();
+            if (historial == null) {
+                cliente.setHistorialCompras(HashBasedTable.create());
             }
             
-            Cliente cliente = clienteOptional.get();  // obtenemos el cliente encontrado
-            // ahora esperamos una respuesta de si el cliente tiene capital para realizar la compra 
-            try {
-                Compra compra = new Compra();
-                compra.agregarSnack(snack);
-                estado = cliente.realizarCompra(snack);
-                // despues que se haya realizando la compra pasamos el objecto pero verificamos que esta haya existido
-                if (estado == true){
-                    this.compras.put(idcliente, compra);
-                }
-            } catch (Exception e) {
-                System.out.println("error de tipo: " + e.getLocalizedMessage());
-                e.printStackTrace();
-            }
-        }
-    
-        return estado;
-    }
-    
-    @Override
-    public boolean recargarSaldo(int idcliente, BigDecimal saldo) {
-        Optional<Cliente> clienteOptional = clientes.values()
-            .stream()
-            .filter(cliente -> cliente.getID() == idcliente)
-            .findFirst();
-    
-        if (clienteOptional.isPresent()) {
-            Cliente cliente = clienteOptional.get();
-            // Recargamos el saldo
-            try {
-                cliente.recargarSaldo(saldo);
-                return true;
-            } catch (Exception e) {
-                System.out.println("Error de tipo: " + e.getLocalizedMessage());
-            }
-        }
-        return false;
-    }
-    
-
-    @Override
-    public boolean guardarHistorial(int idcliente) {
-       boolean estado = false;
-
-       // buscamos el cliente 
-       Optional<Cliente> clienteOptional = clientes.values()
-        .stream()
-        .filter(cliente -> cliente.getID() == idcliente)
-        .findFirst();
-
-        if (clienteOptional.isPresent()){
-            Cliente cliente = clienteOptional.get();
-
-            // ahora agregamos la compra al historial del archivo y del cliente si es true 
-            for (Map.Entry<Integer,Compra> historialComprasLista : compras.entrySet()) {
-                if (historialComprasLista.getKey() == idcliente){
-                    // creamos un estado de si es true se pueda crear un json de las ventas que se ha realizado para despues generar un pdf }
-                    estado = cliente.agregarcomprahistorial(historialComprasLista.getValue());
-                }
-            }
-        }
-        return estado;
-    }
-
-    @Override
-    public File generarPDFHistorial(int idcliente) {
-        // Primero, buscamos el cliente y su historial de compras.
-        Optional<Cliente> clienteOptional = clientes.values()
-            .stream()
-            .filter(cliente -> cliente.getID() == idcliente)
-            .findFirst();
-    
-        if (clienteOptional.isPresent()) {
-            Cliente cliente = clienteOptional.get();
+            cliente.verhistorialCompras().put(compra.getfecha(), compra.getIDCompra(), compra);
             
-            // Crear el documento PDF
-            PDDocument document = new PDDocument();
-            PDPage page = new PDPage();
-            document.addPage(page);
+            // Actualizar el cliente en la base de datos
+            actualizarCliente(cliente);
             
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 18);
-                contentStream.newLineAtOffset(100, 750);  // Posición del texto
-    
-                // Título del PDF
-                contentStream.showText("Historial de Compras del Cliente " + idcliente);
-                contentStream.newLine();
-                contentStream.setFont(PDType1Font.HELVETICA, 12);
-                
-                // Detalles del cliente
-                contentStream.showText("Nombre: " + cliente.getNombre());
-                contentStream.newLine();
-                contentStream.showText("Fecha de generación: " + LocalDateTime.now());
-                contentStream.newLine();
-                
-                // Detallar las compras realizadas por el cliente
-                contentStream.showText("Detalles de las Compras:");
-                contentStream.newLine();
-    
-                // Obtener el historial de compras del cliente
-                Table<LocalDateTime, Integer, Compra> historialCompras  = HashBasedTable.create();
-                try {
-                    historialCompras = cliente.verhistorialCompras();
-                } catch (Exception e) {
-                    System.out.println("error de tipo: " + e.getLocalizedMessage());
-                    e.printStackTrace();
-                }
-    
-                // Iteramos sobre el historial de compras
-                for (Map.Entry<LocalDateTime, Map<Integer, Compra>> entry : historialCompras.rowMap().entrySet()) {
-                    LocalDateTime fecha = entry.getKey();
-                    
-                    // Para cada compra, obtenemos los detalles
-                    for (Compra compra : entry.getValue().values()) {
-                        Table<Integer, String, Object> detallesCompra = compra.getDetalles();
-                        
-                        // Escribir los detalles de la compra en el PDF
-                        contentStream.showText("Fecha: " + fecha.toString());
-                        contentStream.newLine();
-                        contentStream.showText("Cliente: " + compra.getCliente().getNombre());
-                        contentStream.newLine();
-                        contentStream.showText("ID Compra: " + compra.getIDCompra());
-                        contentStream.newLine();
-    
-                        // Detalles de los snacks de la compra
-                        for (Map.Entry<Integer, Map<String, Object>> snackEntry : detallesCompra.rowMap().entrySet()) {
-                            Map<String, Object> snackDetalles = snackEntry.getValue();
-                            contentStream.showText("Producto: " + snackDetalles.get("Producto"));
-                            contentStream.newLine();
-                            contentStream.showText("Precio: " + snackDetalles.get("Precio"));
-                            contentStream.newLine();
-                            contentStream.showText("Tipo: " + snackDetalles.get("Tipo"));
-                            contentStream.newLine();
-                        }
-    
-                        // Espacio entre compras
-                        contentStream.newLine();
-                    }
-                }
-    
-                // Detallar el total de la compra (última fila del historial)
-                try {
-                    contentStream.showText("Total: " + cliente.verhistorialCompras().values().stream()
-                        .mapToDouble(compra -> compra.calcularTotal().doubleValue())
-                        .sum());
-                } catch (Exception e) {
-                    System.out.println("error de tipo: " + e.getLocalizedMessage());
-                    e.printStackTrace();
-                }
-                contentStream.newLine();
-    
-                contentStream.endText();  // Termina la escritura de texto
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;  // Si hay un error, retornamos null
+            // Generar recibo PDF
+            File reciboPDF = pdfService.generarReciboPDF(compra);
+            if (reciboPDF != null) {
+                System.out.println("Recibo generado exitosamente: " + reciboPDF.getAbsolutePath());
             }
-    
-            // Guardar el archivo PDF generado
-            File pdfFile = new File("historial_compra_cliente_" + idcliente + ".pdf");
-            try {
-                document.save(pdfFile);
-                document.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-    
-            // Retornar el archivo PDF generado
-            return pdfFile;
-        } else {
-            System.out.println("Cliente no encontrado.");
+            
+            resultado = true;
+        }
+        return resultado;
+    }
+
+    @Override
+    public File generarHistorialClientePDF(Integer idCliente) {
+        Cliente cliente = obtenerClientePorID(idCliente);
+        if (cliente == null) {
+            System.out.println("Error: No se encontró el cliente con ID " + idCliente);
             return null;
         }
+        
+        Table<LocalDateTime, Integer, Compra> historial = cliente.verhistorialCompras();
+        if (historial == null || historial.isEmpty()) {
+            System.out.println("El cliente no tiene historial de compras.");
+            // Aún así generamos un PDF vacío
+            historial = HashBasedTable.create();
+        }
+        
+        return pdfService.generarHistorialClientePDF(cliente, historial);
     }
-    
 
+    @Override
+    public BigDecimal calcularGastoTotalCliente(Integer idCliente) {
+        Cliente cliente = obtenerClientePorID(idCliente);
+        BigDecimal total = BigDecimal.ZERO;
+        
+        if (cliente != null && cliente.verhistorialCompras() != null) {
+            for (Compra compra : cliente.verhistorialCompras().values()) {
+                total = total.add(compra.calcularTotal());
+            }
+        }
+        
+        return total;
+    }
+
+    @Override
+    public int contarComprasCliente(Integer idCliente) {
+        Cliente cliente = obtenerClientePorID(idCliente);
+        if (cliente != null && cliente.verhistorialCompras() != null) {
+            return cliente.verhistorialCompras().size();
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean existeCliente(Integer id) {
+        return clientes.containsKey(id);
+    }
+
+    @Override
+    public File generarFacturaCompra(Integer idCompra) {
+        // Buscar la compra en los historiales de todos los clientes
+        for (Cliente cliente : clientes.values()) {
+            if (cliente.verhistorialCompras() != null) {
+                for (Compra compra : cliente.verhistorialCompras().values()) {
+                    if (compra.getIDCompra().equals(idCompra)) {
+                        return pdfService.generarReciboPDF(compra);
+                    }
+                }
+            }
+        }
+        
+        System.out.println("No se encontró la compra con ID " + idCompra);
+        return null;
     }
     
+    // Implementación de los métodos adicionales de la interfaz
+    
+    @Override
+    public Cliente buscarCliente(int idCliente) {
+        return obtenerClientePorID(idCliente);
+    }
+    
+    @Override
+    public void guardarHistorial(int idCliente) {
+        Cliente cliente = obtenerClientePorID(idCliente);
+        if (cliente != null) {
+            actualizarCliente(cliente);
+        }
+    }
+}

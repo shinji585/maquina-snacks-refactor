@@ -1,54 +1,902 @@
 {
   "1": {
-    "Papas fritas": {
-      "precio": 70.0,
-      "nombre": "Papas fritas",
+    "Dulce": {
+      "precio": 1.25,
+      "nombre": "Caramelos de Fresa",
       "idSnack": 1,
-      "cantidad": 3,
-      "tipo": "Barbacoa"
+      "cantidad": 47,
+      "tipo": "Dulce"
     }
   },
   "2": {
-    "Postobon": {
-      "precio": 50.0,
-      "nombre": "Postobon",
+    "Dulce": {
+      "precio": 2.5,
+      "nombre": "Gomitas de Ositos",
       "idSnack": 2,
-      "cantidad": 15,
-      "tipo": "Manzana"
+      "cantidad": 45,
+      "tipo": "Dulce"
     }
   },
   "3": {
-    "Sandwich": {
-      "precio": 120.0,
-      "nombre": "Sandwich",
+    "Dulce": {
+      "precio": 0.75,
+      "nombre": "Paleta de Manzana",
       "idSnack": 3,
-      "cantidad": 12,
-      "tipo": "Jamon y Queso"
+      "cantidad": 60,
+      "tipo": "Dulce"
+    }
+  },
+  "4": {
+    "Dulce": {
+      "precio": 0.5,
+      "nombre": "Chicle de Menta",
+      "idSnack": 4,
+      "cantidad": 80,
+      "tipo": "Dulce"
+    }
+  },
+  "5": {
+    "Dulce": {
+      "precio": 1.75,
+      "nombre": "Malvavisco de Cereza",
+      "idSnack": 5,
+      "cantidad": 35,
+      "tipo": "Dulce"
     }
   },
   "6": {
-    "festival": {
-      "precio": 15.0,
-      "nombre": "festival",
+    "Dulce": {
+      "precio": 2.25,
+      "nombre": "Chocolate de Plátano",
       "idSnack": 6,
-      "cantidad": 3,
-      "tipo": "galleta dulce"
+      "cantidad": 30,
+      "tipo": "Dulce"
     }
   },
-  "0": {
-    "Papas fritas": {
+  "7": {
+    "Dulce": {
       "precio": 1.5,
-      "nombre": "Papas fritas",
-      "idSnack": 0,
-      "cantidad": 0,
-      "tipo": "Salado"
-    },
-    "Chocolate": {
-      "precio": 2.0,
-      "nombre": "Chocolate",
-      "idSnack": 0,
-      "cantidad": 0,
+      "nombre": "Galleta Dulce de Naranja",
+      "idSnack": 7,
+      "cantidad": 40,
       "tipo": "Dulce"
+    }
+  },
+  "8": {
+    "Dulce": {
+      "precio": 1.25,
+      "nombre": "Caramelos de Limón",
+      "idSnack": 8,
+      "cantidad": 55,
+      "tipo": "Dulce"
+    }
+  },
+  "9": {
+    "Dulce": {
+      "precio": 0.85,
+      "nombre": "Paleta de Cereza",
+      "idSnack": 9,
+      "cantidad": 65,
+      "tipo": "Dulce"
+    }
+  },
+  "10": {
+    "Dulce": {
+      "precio": 2.75,
+      "nombre": "Gomitas de Sandía",
+      "idSnack": 10,
+      "cantidad": 38,
+      "tipo": "Dulce"
+    }
+  },
+  "11": {
+    "Dulce": {
+      "precio": 3.2,
+      "nombre": "Chocolate Blanco con Fresa",
+      "idSnack": 11,
+      "cantidad": 25,
+      "tipo": "Dulce"
+    }
+  },
+  "12": {
+    "Dulce": {
+      "precio": 1.8,
+      "nombre": "Malvavisco de Vainilla",
+      "idSnack": 12,
+      "cantidad": 42,
+      "tipo": "Dulce"
+    }
+  },
+  "13": {
+    "Dulce": {
+      "precio": 1.65,
+      "nombre": "Galleta Dulce de Chocolate",
+      "idSnack": 13,
+      "cantidad": 48,
+      "tipo": "Dulce"
+    }
+  },
+  "14": {
+    "Dulce": {
+      "precio": 1.2,
+      "nombre": "Caramelos de Uva",
+      "idSnack": 14,
+      "cantidad": 58,
+      "tipo": "Dulce"
+    }
+  },
+  "15": {
+    "Dulce": {
+      "precio": 0.9,
+      "nombre": "Paleta de Limón",
+      "idSnack": 15,
+      "cantidad": 70,
+      "tipo": "Dulce"
+    }
+  },
+  "16": {
+    "Dulce": {
+      "precio": 0.55,
+      "nombre": "Chicle de Fresa",
+      "idSnack": 16,
+      "cantidad": 85,
+      "tipo": "Dulce"
+    }
+  },
+  "17": {
+    "Dulce": {
+      "precio": 3.5,
+      "nombre": "Chocolate Negro con Menta",
+      "idSnack": 17,
+      "cantidad": 22,
+      "tipo": "Dulce"
+    }
+  },
+  "18": {
+    "Dulce": {
+      "precio": 1.3,
+      "nombre": "Caramelos de Manzana",
+      "idSnack": 18,
+      "cantidad": 52,
+      "tipo": "Dulce"
+    }
+  },
+  "19": {
+    "Dulce": {
+      "precio": 2.6,
+      "nombre": "Gomitas de Fruta",
+      "idSnack": 19,
+      "cantidad": 43,
+      "tipo": "Dulce"
+    }
+  },
+  "20": {
+    "Dulce": {
+      "precio": 3.75,
+      "nombre": "Chocolate con Almendras",
+      "idSnack": 20,
+      "cantidad": 20,
+      "tipo": "Dulce"
+    }
+  },
+  "21": {
+    "Salado": {
+      "precio": 1.99,
+      "nombre": "Papas Naturales",
+      "idSnack": 21,
+      "cantidad": 45,
+      "tipo": "Salado"
+    }
+  },
+  "22": {
+    "Salado": {
+      "precio": 2.49,
+      "nombre": "Nachos Chile",
+      "idSnack": 22,
+      "cantidad": 38,
+      "tipo": "Salado"
+    }
+  },
+  "23": {
+    "Salado": {
+      "precio": 1.79,
+      "nombre": "Pretzels Queso",
+      "idSnack": 23,
+      "cantidad": 55,
+      "tipo": "Salado"
+    }
+  },
+  "24": {
+    "Salado": {
+      "precio": 2.25,
+      "nombre": "Cacahuates BBQ",
+      "idSnack": 24,
+      "cantidad": 48,
+      "tipo": "Salado"
+    }
+  },
+  "25": {
+    "Salado": {
+      "precio": 1.69,
+      "nombre": "Galletas Saladas Jalapeño",
+      "idSnack": 25,
+      "cantidad": 60,
+      "tipo": "Salado"
+    }
+  },
+  "26": {
+    "Salado": {
+      "precio": 3.25,
+      "nombre": "Nueces Cebolla",
+      "idSnack": 26,
+      "cantidad": 30,
+      "tipo": "Salado"
+    }
+  },
+  "27": {
+    "Salado": {
+      "precio": 1.89,
+      "nombre": "Churros Salsa",
+      "idSnack": 27,
+      "cantidad": 42,
+      "tipo": "Salado"
+    }
+  },
+  "28": {
+    "Salado": {
+      "precio": 2.15,
+      "nombre": "Papas Chile",
+      "idSnack": 28,
+      "cantidad": 52,
+      "tipo": "Salado"
+    }
+  },
+  "29": {
+    "Salado": {
+      "precio": 2.55,
+      "nombre": "Nachos Queso",
+      "idSnack": 29,
+      "cantidad": 35,
+      "tipo": "Salado"
+    }
+  },
+  "30": {
+    "Salado": {
+      "precio": 1.85,
+      "nombre": "Pretzels BBQ",
+      "idSnack": 30,
+      "cantidad": 58,
+      "tipo": "Salado"
+    }
+  },
+  "31": {
+    "Salado": {
+      "precio": 2.35,
+      "nombre": "Cacahuates Jalapeño",
+      "idSnack": 31,
+      "cantidad": 45,
+      "tipo": "Salado"
+    }
+  },
+  "32": {
+    "Salado": {
+      "precio": 1.75,
+      "nombre": "Galletas Saladas Cebolla",
+      "idSnack": 32,
+      "cantidad": 65,
+      "tipo": "Salado"
+    }
+  },
+  "33": {
+    "Salado": {
+      "precio": 3.35,
+      "nombre": "Nueces Salsa",
+      "idSnack": 33,
+      "cantidad": 28,
+      "tipo": "Salado"
+    }
+  },
+  "34": {
+    "Salado": {
+      "precio": 1.95,
+      "nombre": "Churros Naturales",
+      "idSnack": 34,
+      "cantidad": 50,
+      "tipo": "Salado"
+    }
+  },
+  "35": {
+    "Salado": {
+      "precio": 2.2,
+      "nombre": "Papas Queso",
+      "idSnack": 35,
+      "cantidad": 48,
+      "tipo": "Salado"
+    }
+  },
+  "36": {
+    "Salado": {
+      "precio": 2.65,
+      "nombre": "Nachos BBQ",
+      "idSnack": 36,
+      "cantidad": 33,
+      "tipo": "Salado"
+    }
+  },
+  "37": {
+    "Salado": {
+      "precio": 1.9,
+      "nombre": "Pretzels Jalapeño",
+      "idSnack": 37,
+      "cantidad": 55,
+      "tipo": "Salado"
+    }
+  },
+  "38": {
+    "Salado": {
+      "precio": 2.4,
+      "nombre": "Cacahuates Cebolla",
+      "idSnack": 38,
+      "cantidad": 42,
+      "tipo": "Salado"
+    }
+  },
+  "39": {
+    "Salado": {
+      "precio": 1.8,
+      "nombre": "Galletas Saladas Salsa",
+      "idSnack": 39,
+      "cantidad": 62,
+      "tipo": "Salado"
+    }
+  },
+  "40": {
+    "Salado": {
+      "precio": 3.45,
+      "nombre": "Nueces Chile",
+      "idSnack": 40,
+      "cantidad": 25,
+      "tipo": "Salado"
+    }
+  },
+  "41": {
+    "Bebida": {
+      "precio": 1.25,
+      "nombre": "Agua Natural",
+      "idSnack": 41,
+      "cantidad": 75,
+      "tipo": "Bebida"
+    }
+  },
+  "42": {
+    "Bebida": {
+      "precio": 1.99,
+      "nombre": "Refresco de Fresa",
+      "idSnack": 42,
+      "cantidad": 60,
+      "tipo": "Bebida"
+    }
+  },
+  "43": {
+    "Bebida": {
+      "precio": 2.49,
+      "nombre": "Jugo de Manzana",
+      "idSnack": 43,
+      "cantidad": 50,
+      "tipo": "Bebida"
+    }
+  },
+  "44": {
+    "Bebida": {
+      "precio": 1.85,
+      "nombre": "Té de Uva",
+      "idSnack": 44,
+      "cantidad": 55,
+      "tipo": "Bebida"
+    }
+  },
+  "45": {
+    "Bebida": {
+      "precio": 2.95,
+      "nombre": "Energizante de Naranja",
+      "idSnack": 45,
+      "cantidad": 40,
+      "tipo": "Bebida"
+    }
+  },
+  "46": {
+    "Bebida": {
+      "precio": 3.25,
+      "nombre": "Malteada de Limón",
+      "idSnack": 46,
+      "cantidad": 35,
+      "tipo": "Bebida"
+    }
+  },
+  "47": {
+    "Bebida": {
+      "precio": 2.75,
+      "nombre": "Café de Chocolate",
+      "idSnack": 47,
+      "cantidad": 42,
+      "tipo": "Bebida"
+    }
+  },
+  "48": {
+    "Bebida": {
+      "precio": 1.75,
+      "nombre": "Leche de Vainilla",
+      "idSnack": 48,
+      "cantidad": 48,
+      "tipo": "Bebida"
+    }
+  },
+  "49": {
+    "Bebida": {
+      "precio": 1.35,
+      "nombre": "Agua de Fresa",
+      "idSnack": 49,
+      "cantidad": 72,
+      "tipo": "Bebida"
+    }
+  },
+  "50": {
+    "Bebida": {
+      "precio": 2.05,
+      "nombre": "Refresco de Manzana",
+      "idSnack": 50,
+      "cantidad": 58,
+      "tipo": "Bebida"
+    }
+  },
+  "51": {
+    "Bebida": {
+      "precio": 2.55,
+      "nombre": "Jugo de Uva",
+      "idSnack": 51,
+      "cantidad": 48,
+      "tipo": "Bebida"
+    }
+  },
+  "52": {
+    "Bebida": {
+      "precio": 1.9,
+      "nombre": "Té de Naranja",
+      "idSnack": 52,
+      "cantidad": 53,
+      "tipo": "Bebida"
+    }
+  },
+  "53": {
+    "Bebida": {
+      "precio": 3.05,
+      "nombre": "Energizante de Limón",
+      "idSnack": 53,
+      "cantidad": 38,
+      "tipo": "Bebida"
+    }
+  },
+  "54": {
+    "Bebida": {
+      "precio": 3.35,
+      "nombre": "Malteada de Chocolate",
+      "idSnack": 54,
+      "cantidad": 33,
+      "tipo": "Bebida"
+    }
+  },
+  "55": {
+    "Bebida": {
+      "precio": 2.85,
+      "nombre": "Café de Vainilla",
+      "idSnack": 55,
+      "cantidad": 40,
+      "tipo": "Bebida"
+    }
+  },
+  "56": {
+    "Bebida": {
+      "precio": 1.85,
+      "nombre": "Leche de Fresa",
+      "idSnack": 56,
+      "cantidad": 45,
+      "tipo": "Bebida"
+    }
+  },
+  "57": {
+    "Bebida": {
+      "precio": 1.45,
+      "nombre": "Agua de Manzana",
+      "idSnack": 57,
+      "cantidad": 70,
+      "tipo": "Bebida"
+    }
+  },
+  "58": {
+    "Bebida": {
+      "precio": 2.15,
+      "nombre": "Refresco de Uva",
+      "idSnack": 58,
+      "cantidad": 55,
+      "tipo": "Bebida"
+    }
+  },
+  "59": {
+    "Bebida": {
+      "precio": 2.65,
+      "nombre": "Jugo de Naranja",
+      "idSnack": 59,
+      "cantidad": 45,
+      "tipo": "Bebida"
+    }
+  },
+  "60": {
+    "Bebida": {
+      "precio": 1.95,
+      "nombre": "Té de Limón",
+      "idSnack": 60,
+      "cantidad": 50,
+      "tipo": "Bebida"
+    }
+  },
+  "61": {
+    "Fruta": {
+      "precio": 2.5,
+      "nombre": "Manzana Deshidratada",
+      "idSnack": 61,
+      "cantidad": 40,
+      "tipo": "Fruta"
+    }
+  },
+  "62": {
+    "Fruta": {
+      "precio": 2.75,
+      "nombre": "Plátano en Almíbar",
+      "idSnack": 62,
+      "cantidad": 35,
+      "tipo": "Fruta"
+    }
+  },
+  "63": {
+    "Fruta": {
+      "precio": 2.25,
+      "nombre": "Pera en Trozos",
+      "idSnack": 63,
+      "cantidad": 45,
+      "tipo": "Fruta"
+    }
+  },
+  "64": {
+    "Fruta": {
+      "precio": 3.25,
+      "nombre": "Uvas Frescas",
+      "idSnack": 64,
+      "cantidad": 30,
+      "tipo": "Fruta"
+    }
+  },
+  "65": {
+    "Fruta": {
+      "precio": 3.5,
+      "nombre": "Fresas en Mix",
+      "idSnack": 65,
+      "cantidad": 28,
+      "tipo": "Fruta"
+    }
+  },
+  "66": {
+    "Fruta": {
+      "precio": 2.6,
+      "nombre": "Mango Deshidratado",
+      "idSnack": 66,
+      "cantidad": 38,
+      "tipo": "Fruta"
+    }
+  },
+  "67": {
+    "Fruta": {
+      "precio": 2.85,
+      "nombre": "Durazno en Almíbar",
+      "idSnack": 67,
+      "cantidad": 32,
+      "tipo": "Fruta"
+    }
+  },
+  "68": {
+    "Fruta": {
+      "precio": 2.35,
+      "nombre": "Kiwi en Trozos",
+      "idSnack": 68,
+      "cantidad": 42,
+      "tipo": "Fruta"
+    }
+  },
+  "69": {
+    "Fruta": {
+      "precio": 1.25,
+      "nombre": "Manzana Fresca",
+      "idSnack": 69,
+      "cantidad": 65,
+      "tipo": "Fruta"
+    }
+  },
+  "70": {
+    "Fruta": {
+      "precio": 1.5,
+      "nombre": "Plátano en Trozos",
+      "idSnack": 70,
+      "cantidad": 60,
+      "tipo": "Fruta"
+    }
+  },
+  "71": {
+    "Fruta": {
+      "precio": 2.4,
+      "nombre": "Pera Deshidratada",
+      "idSnack": 71,
+      "cantidad": 43,
+      "tipo": "Fruta"
+    }
+  },
+  "72": {
+    "Fruta": {
+      "precio": 2.9,
+      "nombre": "Uvas en Almíbar",
+      "idSnack": 72,
+      "cantidad": 33,
+      "tipo": "Fruta"
+    }
+  },
+  "73": {
+    "Fruta": {
+      "precio": 2.15,
+      "nombre": "Fresas en Trozos",
+      "idSnack": 73,
+      "cantidad": 48,
+      "tipo": "Fruta"
+    }
+  },
+  "74": {
+    "Fruta": {
+      "precio": 1.95,
+      "nombre": "Mango Fresco",
+      "idSnack": 74,
+      "cantidad": 55,
+      "tipo": "Fruta"
+    }
+  },
+  "75": {
+    "Fruta": {
+      "precio": 2.65,
+      "nombre": "Durazno en Mix",
+      "idSnack": 75,
+      "cantidad": 38,
+      "tipo": "Fruta"
+    }
+  },
+  "76": {
+    "Fruta": {
+      "precio": 2.8,
+      "nombre": "Kiwi Deshidratado",
+      "idSnack": 76,
+      "cantidad": 35,
+      "tipo": "Fruta"
+    }
+  },
+  "77": {
+    "Fruta": {
+      "precio": 3.75,
+      "nombre": "Mix de Frutas Frescas",
+      "idSnack": 77,
+      "cantidad": 25,
+      "tipo": "Fruta"
+    }
+  },
+  "78": {
+    "Fruta": {
+      "precio": 3.2,
+      "nombre": "Arándanos Deshidratados",
+      "idSnack": 78,
+      "cantidad": 30,
+      "tipo": "Fruta"
+    }
+  },
+  "79": {
+    "Fruta": {
+      "precio": 2.45,
+      "nombre": "Piña en Trozos",
+      "idSnack": 79,
+      "cantidad": 40,
+      "tipo": "Fruta"
+    }
+  },
+  "80": {
+    "Fruta": {
+      "precio": 1.8,
+      "nombre": "Sandía Fresca",
+      "idSnack": 80,
+      "cantidad": 50,
+      "tipo": "Fruta"
+    }
+  },
+  "81": {
+    "Chocolate": {
+      "precio": 2.99,
+      "nombre": "Chocolate Barra Negro",
+      "idSnack": 81,
+      "cantidad": 35,
+      "tipo": "Chocolate"
+    }
+  },
+  "82": {
+    "Chocolate": {
+      "precio": 3.25,
+      "nombre": "Chocolate Bombón con Leche",
+      "idSnack": 82,
+      "cantidad": 30,
+      "tipo": "Chocolate"
+    }
+  },
+  "83": {
+    "Chocolate": {
+      "precio": 3.99,
+      "nombre": "Chocolate Trufa Blanco",
+      "idSnack": 83,
+      "cantidad": 25,
+      "tipo": "Chocolate"
+    }
+  },
+  "84": {
+    "Chocolate": {
+      "precio": 3.75,
+      "nombre": "Chocolate Tableta con Almendras",
+      "idSnack": 84,
+      "cantidad": 28,
+      "tipo": "Chocolate"
+    }
+  },
+  "85": {
+    "Chocolate": {
+      "precio": 4.5,
+      "nombre": "Chocolate Crema con Avellanas",
+      "idSnack": 85,
+      "cantidad": 20,
+      "tipo": "Chocolate"
+    }
+  },
+  "86": {
+    "Chocolate": {
+      "precio": 2.85,
+      "nombre": "Chocolate Galleta con Caramelo",
+      "idSnack": 86,
+      "cantidad": 32,
+      "tipo": "Chocolate"
+    }
+  },
+  "87": {
+    "Chocolate": {
+      "precio": 3.15,
+      "nombre": "Chocolate Bolitas Negro",
+      "idSnack": 87,
+      "cantidad": 33,
+      "tipo": "Chocolate"
+    }
+  },
+  "88": {
+    "Chocolate": {
+      "precio": 3.05,
+      "nombre": "Chocolate Barra con Leche",
+      "idSnack": 88,
+      "cantidad": 34,
+      "tipo": "Chocolate"
+    }
+  },
+  "89": {
+    "Chocolate": {
+      "precio": 3.35,
+      "nombre": "Chocolate Bombón Blanco",
+      "idSnack": 89,
+      "cantidad": 29,
+      "tipo": "Chocolate"
+    }
+  },
+  "90": {
+    "Chocolate": {
+      "precio": 4.15,
+      "nombre": "Chocolate Trufa con Almendras",
+      "idSnack": 90,
+      "cantidad": 24,
+      "tipo": "Chocolate"
+    }
+  },
+  "91": {
+    "Chocolate": {
+      "precio": 3.85,
+      "nombre": "Chocolate Tableta con Avellanas",
+      "idSnack": 91,
+      "cantidad": 27,
+      "tipo": "Chocolate"
+    }
+  },
+  "92": {
+    "Chocolate": {
+      "precio": 4.65,
+      "nombre": "Chocolate Crema con Caramelo",
+      "idSnack": 92,
+      "cantidad": 18,
+      "tipo": "Chocolate"
+    }
+  },
+  "93": {
+    "Chocolate": {
+      "precio": 2.95,
+      "nombre": "Chocolate Galleta Negro",
+      "idSnack": 93,
+      "cantidad": 31,
+      "tipo": "Chocolate"
+    }
+  },
+  "94": {
+    "Chocolate": {
+      "precio": 3.25,
+      "nombre": "Chocolate Bolitas con Leche",
+      "idSnack": 94,
+      "cantidad": 32,
+      "tipo": "Chocolate"
+    }
+  },
+  "95": {
+    "Chocolate": {
+      "precio": 3.1,
+      "nombre": "Chocolate Barra Blanco",
+      "idSnack": 95,
+      "cantidad": 33,
+      "tipo": "Chocolate"
+    }
+  },
+  "96": {
+    "Chocolate": {
+      "precio": 3.45,
+      "nombre": "Chocolate Bombón con Almendras",
+      "idSnack": 96,
+      "cantidad": 28,
+      "tipo": "Chocolate"
+    }
+  },
+  "97": {
+    "Chocolate": {
+      "precio": 4.25,
+      "nombre": "Chocolate Trufa con Avellanas",
+      "idSnack": 97,
+      "cantidad": 22,
+      "tipo": "Chocolate"
+    }
+  },
+  "98": {
+    "Chocolate": {
+      "precio": 3.95,
+      "nombre": "Chocolate Tableta con Caramelo",
+      "idSnack": 98,
+      "cantidad": 26,
+      "tipo": "Chocolate"
+    }
+  },
+  "99": {
+    "Chocolate": {
+      "precio": 4.35,
+      "nombre": "Chocolate Crema Negro",
+      "idSnack": 99,
+      "cantidad": 20,
+      "tipo": "Chocolate"
+    }
+  },
+  "100": {
+    "Chocolate": {
+      "precio": 3.05,
+      "nombre": "Chocolate Galleta con Leche",
+      "idSnack": 100,
+      "cantidad": 30,
+      "tipo": "Chocolate"
     }
   }
 }
