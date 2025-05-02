@@ -1,0 +1,45 @@
+{
+  "1": {
+    "Papas fritas": {
+      "precio": 70.0,
+      "nombre": "Papas fritas",
+      "idSnack": 1,
+      "cantidad": 4,
+      "tipo": "Barbacoa"
+    }
+  },
+  "2": {
+    "Postobon": {
+      "precio": 50.0,
+      "nombre": "Postobon",
+      "idSnack": 2,
+      "cantidad": 20,
+      "tipo": "Manzana"
+    }
+  },
+  "3": {
+    "Sandwich": {
+      "precio": 120.0,
+      "nombre": "Sandwich",
+      "idSnack": 3,
+      "cantidad": 12,
+      "tipo": "Jamon y Queso"
+    }
+  },
+  "0": {
+    "Papas fritas": {
+      "precio": 1.5,
+      "nombre": "Papas fritas",
+      "idSnack": 0,
+      "cantidad": 0,
+      "tipo": "Salado"
+    },
+    "Chocolate": {
+      "precio": 2.0,
+      "nombre": "Chocolate",
+      "idSnack": 0,
+      "cantidad": 0,
+      "tipo": "Dulce"
+    }
+  }
+}

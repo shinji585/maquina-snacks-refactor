@@ -87,5 +87,4 @@ public class Compra {
   public Cliente getCliente() {
     return this.cliente;
   }
-
 }
