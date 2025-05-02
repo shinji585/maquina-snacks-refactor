@@ -56,17 +56,26 @@ public class Cliente extends Persona {
     }
 
     // creamos el metodo realizarCompra 
-    public boolean realizarCompra(Snack snack) throws Exception{
-       if (snack != null && snack.getCantidad() > 0){
-        if (this.saldo.compareTo(new BigDecimal(snack.getPrecio())) == -1){
-            throw new Exception("No tiene saldo para realizar la compra");
-        }else if (this.saldo.compareTo(new BigDecimal(snack.getPrecio())) == 0){
-            return true;
-        }else{
-            return true;
+    public boolean realizarCompra(Snack snack) throws Exception {
+        if (snack != null && snack.getCantidad() > 0) {
+            // Convertimos el precio del snack a BigDecimal para comparar con el saldo
+            BigDecimal precioSnack = new BigDecimal(snack.getPrecio());
+            
+            // Verificamos si el saldo es suficiente
+            if (this.saldo.compareTo(precioSnack) < 0) {
+                throw new Exception("No tiene saldo suficiente para realizar la compra");
+            } else {
+                // Actualizamos el saldo del cliente
+                this.saldo = this.saldo.subtract(precioSnack);
+                
+                // Actualizamos la cantidad del snack
+                snack.setCantidad(snack.getCantidad() - 1);
+                
+                System.out.println("Compra realizada con éxito. Saldo restante: $" + this.saldo);
+                return true;
+            }
         }
-       }
-       return false;
+        return false;
     }
 
     // creamos el metodo para agregarcomprahistorial
