@@ -2,7 +2,28 @@
   "1": {
     "clienteID": 1,
     "saldo": 1000,
-    "historialCompras": {},
+    "historialCompras": {
+      "\"2025-05-01T21:43:59.9391901\"|||1": {
+        "Idcompra": 1,
+        "fecha": "2025-05-01T21:43:59.9391901",
+        "snacksComprados": {},
+        "cliente": {
+          "clienteID": 1,
+          "saldo": 998.75,
+          "historialCompras": {},
+          "nombre": "samuel ",
+          "edad": 19,
+          "apellidos": "vargas cardenas",
+          "sexo": true,
+          "nacionalidad": "colombiano ",
+          "direccion": "olaya herrera",
+          "correoElectronico": "vargassamuel@gmail.com",
+          "numeroTelefono": 314782457,
+          "idPersona": 1,
+          "sexoString": "MASCULINO"
+        }
+      }
+    },
     "nombre": "samuel ",
     "edad": 19,
     "apellidos": "vargas cardenas",

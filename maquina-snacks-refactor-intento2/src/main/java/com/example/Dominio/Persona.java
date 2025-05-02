@@ -1,6 +1,6 @@
 package com.example.Dominio;
 
-import org.checkerframework.checker.units.qual.s;
+
 
 public class Persona {
     // de esta clase se sacaran los atributos que tendra nuestra persona asi como los metodos (implementados de una interface)

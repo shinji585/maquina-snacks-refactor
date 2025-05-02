@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
@@ -14,7 +13,7 @@ public class Cliente extends Persona {
     private int clienteID;
     private static int id = 1;
     private BigDecimal saldo;
-    private Table<LocalDateTime,Integer,Compra> historialCompras; 
+    private Table<LocalDateTime, Integer, Compra> historialCompras; 
 
     // creamos un metodo privado inicializador 
     private void inicializadorCliente(){
@@ -32,7 +31,7 @@ public class Cliente extends Persona {
     public Cliente(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,String correoElectronico, long numeroTelefono,BigDecimal saldo) throws Exception {
         super(nombre, edad, apellidos, sexo, nacionalidad, direccion, correoElectronico, numeroTelefono);
         inicializadorCliente();
-        if ( saldo.compareTo(BigDecimal.ZERO) < 0){
+        if (saldo.compareTo(BigDecimal.ZERO) < 0){
             throw new Exception("no puede ingresar un saldo menor a cero");
         }else{
             this.saldo = saldo;
@@ -56,7 +55,7 @@ public class Cliente extends Persona {
          return this.saldo;
     }
 
-    // creamos el metodo realizarcompra 
+    // creamos el metodo realizarCompra 
     public boolean realizarCompra(Snack snack) throws Exception{
        if (snack != null && snack.getCantidad() > 0){
         if (this.saldo.compareTo(new BigDecimal(snack.getPrecio())) == -1){
@@ -80,24 +79,15 @@ public class Cliente extends Persona {
         return false;
     }
 
-    // creamos la clase verhistorial 
-    public Table<LocalDateTime,Integer,Compra> verhistorialCompras() throws Exception{
-        // creamos una validacion que verifique que la tabla no esta vacia para no tener errores y que si esta esta vacia mande una exepcion 
-        if (this.historialCompras.isEmpty()){
-            throw new Exception("No tiene productos comprados hasta el momento...");
-        }else{
-            // ahora creamos una variable local para el caso y recorremos la tabla 
-            Table<LocalDateTime,Integer,Compra> retonrarHistorial = HashBasedTable.create();
-            historialCompras.cellSet().stream().forEach(celda -> {
-                LocalDateTime fecha = celda.getRowKey();
-                Integer idCompra = celda.getColumnKey();
-                Compra valor = celda.getValue();
-                // agregamos los datos a la tabla 
-                retonrarHistorial.put(fecha, idCompra, valor);
-            });
-            // retornamos el valor 
-            return retonrarHistorial;
-        }
+    // creamos la clase verhistorial - MODIFIED to not throw Exception
+    public Table<LocalDateTime,Integer,Compra> verhistorialCompras(){
+        // Return the historial even if empty
+        return this.historialCompras;
+    }
+
+    // Add setter method for historialCompras
+    public void setHistorialCompras(Table<LocalDateTime, Integer, Compra> historialCompras) {
+        this.historialCompras = historialCompras;
     }
 
     // creamo el metodo verHistorialComprasPorFecah
@@ -110,11 +100,17 @@ public class Cliente extends Persona {
                 lista.add(j.getValue());
             }
         }
-            return lista;
+        return lista;
     }
 
     public int getID(){
         return this.clienteID;
     }
 
+    public void setSaldo(BigDecimal nuevoSaldo) {
+        if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("El saldo no puede ser negativo");
+        }
+        this.saldo = nuevoSaldo;
+    }
 }
