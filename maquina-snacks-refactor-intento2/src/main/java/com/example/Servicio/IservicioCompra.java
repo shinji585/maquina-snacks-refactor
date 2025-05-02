@@ -1,5 +1,6 @@
 package com.example.Servicio;
 
+
 import java.time.LocalDateTime;
 
 import com.example.Dominio.Compra;
@@ -42,4 +43,7 @@ public interface IservicioCompra {
     String generarReciboCompra(int idCompra);
 
     boolean agregarSnackACompra(Integer idCompra, int idSnack);
+
+    // creamos un metodo que nos permita comprar por dropset dependiendo de si el usuario quiere o no 
+    Compra comprarDropset(Integer idCliente) throws Exception;
 }

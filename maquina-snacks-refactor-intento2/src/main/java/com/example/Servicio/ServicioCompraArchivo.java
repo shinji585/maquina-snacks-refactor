@@ -7,7 +7,9 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.example.Dominio.Cliente;
@@ -26,6 +28,7 @@ public class ServicioCompraArchivo implements IservicioCompra {
     private Gson gson;
     private IservicioCliente servicioCliente;
     private IservicioSnakcs servicioSnacks;
+    static Scanner scanner = new Scanner(System.in);
 
     public ServicioCompraArchivo() {
         this.compras = HashBasedTable.create();
@@ -190,5 +193,75 @@ public class ServicioCompraArchivo implements IservicioCompra {
             }
         }
         return false;
+    }
+    
+    // creamos el metodo comprar por dropset 
+
+    @Override
+    public Compra comprarDropset(Integer idCliente) throws Exception {
+        System.out.println("\tUsted ha decidido comprar por dropset. A continuación se generará su dropset");
+        
+        // Primero verificamos que el cliente exista
+        Cliente cliente = servicioCliente.obtenerClientePorID(idCliente);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado");
+        }
+    
+        // Creamos la compra primero
+        Compra nuevaCompra = crearCompra(idCliente);
+        if (nuevaCompra == null) {
+            throw new Exception("No se pudo crear la compra");
+        }
+        
+        // Obtenemos la cantidad de tipos diferentes de snacks a comprar
+        System.out.print("Ingrese la cantidad de tipos de snacks que tendrá su dropset: ");
+        int cantidadTipos = scanner.nextInt();
+    
+        if (cantidadTipos <= 0) {
+            throw new Exception("La cantidad de tipos de productos a comprar no debe ser menor o igual a cero");
+        } else {
+            // Mostramos los snacks disponibles
+            ServicioSnacksArchivo servicioSnacksArchivo = new ServicioSnacksArchivo();
+            servicioSnacksArchivo.mostrarSnacks();
+            
+            for (int i = 0; i < cantidadTipos; i++) {
+                // Solicitamos el id del snack junto con la cantidad
+                System.out.print("Ingrese el ID del snack #" + (i+1) + " que quiere comprar: ");
+                int idSnack = scanner.nextInt();
+    
+                System.out.print("Ingrese la cantidad de unidades que quiere comprar de este snack: ");
+                int cantidadSnacks = scanner.nextInt();
+    
+                if (cantidadSnacks <= 0) {
+                    System.out.println("La cantidad debe ser mayor que cero. No se agregará este snack.");
+                    continue;
+                }
+    
+                // Verificamos si hay suficiente stock antes de intentar agregar
+                boolean hayStock = true;
+                for (int j = 0; j < cantidadSnacks; j++) {
+                    Snack snack = servicioSnacks.comprarSnack2(idSnack);
+                    if (snack == null) {
+                        hayStock = false;
+                        System.out.println("No hay suficiente stock para " + cantidadSnacks + " unidades del snack ID " + idSnack);
+                        break;
+                    }
+                    nuevaCompra.agregarSnack(snack);
+                }
+                
+                if (hayStock) {
+                    System.out.println("Se agregaron " + cantidadSnacks + " unidades del snack ID " + idSnack + " a su compra");
+                }
+            }
+            
+            // Guardamos los cambios en la compra
+            guardarCompras();
+            
+            // Mostramos el total de la compra
+            System.out.println("Total de la compra: $" + nuevaCompra.calcularTotal());
+            System.out.println("Para finalizar la compra, use la opción 'Finalizar compra' con el ID: " + nuevaCompra.getIDCompra());
+            
+            return nuevaCompra;
+        }
     }
 }

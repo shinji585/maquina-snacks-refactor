@@ -1,53 +1,53 @@
 {
-  "1": {
-    "clienteID": 1,
-    "saldo": 1000,
+  "2": {
+    "clienteID": 2,
+    "saldo": 100,
+    "historialCompras": {},
+    "nombre": "randy (iguana)",
+    "edad": 22,
+    "apellidos": "iguana 2.0",
+    "sexo": true,
+    "nacionalidad": "venezolana",
+    "direccion": "olaya sector el progreso",
+    "correoElectronico": "randyelmatador@gmail.com",
+    "numeroTelefono": 14820034782,
+    "idPersona": 1,
+    "sexoString": "MASCULINO"
+  },
+  "3": {
+    "clienteID": 3,
+    "saldo": 150,
     "historialCompras": {
-      "\"2025-05-01T21:43:59.9391901\"|||1": {
+      "\"2025-05-02T07:52:45.6658024\"|||1": {
         "Idcompra": 1,
-        "fecha": "2025-05-01T21:43:59.9391901",
+        "fecha": "2025-05-02T07:52:45.6658024",
         "snacksComprados": {},
         "cliente": {
-          "clienteID": 1,
-          "saldo": 998.75,
+          "clienteID": 3,
+          "saldo": 119.50,
           "historialCompras": {},
-          "nombre": "samuel ",
+          "nombre": "samuel vargas",
           "edad": 19,
-          "apellidos": "vargas cardenas",
+          "apellidos": "cardenas",
           "sexo": true,
-          "nacionalidad": "colombiano ",
-          "direccion": "olaya herrera",
-          "correoElectronico": "vargassamuel@gmail.com",
-          "numeroTelefono": 314782457,
+          "nacionalidad": "colombiano",
+          "direccion": "13 de junio",
+          "correoElectronico": "samuel@gmail.com",
+          "numeroTelefono": 315482445,
           "idPersona": 1,
           "sexoString": "MASCULINO"
         }
       }
     },
-    "nombre": "samuel ",
+    "nombre": "samuel vargas",
     "edad": 19,
-    "apellidos": "vargas cardenas",
+    "apellidos": "cardenas",
     "sexo": true,
-    "nacionalidad": "colombiano ",
-    "direccion": "olaya herrera",
-    "correoElectronico": "vargassamuel@gmail.com",
-    "numeroTelefono": 314782457,
+    "nacionalidad": "colombiano",
+    "direccion": "13 de junio",
+    "correoElectronico": "samuel@gmail.com",
+    "numeroTelefono": 315482445,
     "idPersona": 1,
     "sexoString": "MASCULINO"
-  },
-  "2": {
-    "clienteID": 2,
-    "saldo": 1200,
-    "historialCompras": {},
-    "nombre": "martha luz ",
-    "edad": 42,
-    "apellidos": "cardenas cruz",
-    "sexo": false,
-    "nacionalidad": "colombiana ",
-    "direccion": "13 de junio",
-    "correoElectronico": "marthaluz@gmil.com",
-    "numeroTelefono": 314785455,
-    "idPersona": 1,
-    "sexoString": "FEMENINO"
   }
 }
