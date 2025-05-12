@@ -4,7 +4,7 @@
       "precio": 2.99,
       "nombre": "Barra Proteica de Chocolate",
       "idSnack": 1,
-      "cantidad": 40,
+      "cantidad": 17,
       "tipo": "Barra"
     }
   },
@@ -31,7 +31,7 @@
       "precio": 2.49,
       "nombre": "Chips de Kale Orgánicos",
       "idSnack": 4,
-      "cantidad": 35,
+      "cantidad": 21,
       "tipo": "Snack"
     }
   },
@@ -46,7 +46,7 @@
   },
   "6": {
     "Saludable": {
-      "precio": 2.50,
+      "precio": 2.5,
       "nombre": "Smoothie Verde Detox",
       "idSnack": 6,
       "cantidad": 25,
@@ -55,7 +55,7 @@
   },
   "7": {
     "Saludable": {
-      "precio": 3.10,
+      "precio": 3.1,
       "nombre": "Barra Keto de Almendra",
       "idSnack": 7,
       "cantidad": 40,
@@ -64,7 +64,7 @@
   },
   "8": {
     "Saludable": {
-      "precio": 1.80,
+      "precio": 1.8,
       "nombre": "Chips de Garbanzo",
       "idSnack": 8,
       "cantidad": 45,
@@ -76,16 +76,16 @@
       "precio": 3.35,
       "nombre": "Yogur Griego con Miel",
       "idSnack": 9,
-      "cantidad": 28,
+      "cantidad": 8,
       "tipo": "Lácteo"
     }
   },
   "10": {
     "Saludable": {
-      "precio": 2.60,
+      "precio": 2.6,
       "nombre": "Galletas de Avena sin Azúcar",
       "idSnack": 10,
-      "cantidad": 30,
+      "cantidad": 0,
       "tipo": "Galleta"
     }
   }

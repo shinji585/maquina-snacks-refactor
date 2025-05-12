@@ -1,52 +1,16 @@
 {
-  "2": {
-    "clienteID": 2,
-    "saldo": 100,
-    "historialCompras": {},
-    "nombre": "randy (iguana)",
-    "edad": 22,
-    "apellidos": "iguana 2.0",
-    "sexo": true,
-    "nacionalidad": "venezolana",
-    "direccion": "olaya sector el progreso",
-    "correoElectronico": "randyelmatador@gmail.com",
-    "numeroTelefono": 14820034782,
-    "idPersona": 1,
-    "sexoString": "MASCULINO"
-  },
   "3": {
     "clienteID": 3,
-    "saldo": 150,
-    "historialCompras": {
-      "\"2025-05-02T07:52:45.6658024\"|||1": {
-        "Idcompra": 1,
-        "fecha": "2025-05-02T07:52:45.6658024",
-        "snacksComprados": {},
-        "cliente": {
-          "clienteID": 3,
-          "saldo": 119.50,
-          "historialCompras": {},
-          "nombre": "samuel vargas",
-          "edad": 19,
-          "apellidos": "cardenas",
-          "sexo": true,
-          "nacionalidad": "colombiano",
-          "direccion": "13 de junio",
-          "correoElectronico": "samuel@gmail.com",
-          "numeroTelefono": 315482445,
-          "idPersona": 1,
-          "sexoString": "MASCULINO"
-        }
-      }
-    },
-    "nombre": "samuel vargas",
-    "edad": 19,
-    "apellidos": "cardenas",
+    "saldo": 300,
+    "historialCompras": {},
+    "nombre": "samuel",
+    "edad": 15,
+    "apellidos": "vargas cardenas",
     "sexo": true,
     "nacionalidad": "colombiano",
-    "direccion": "13 de junio",
+    "direccion": "olaya herrera",
     "correoElectronico": "samuel@gmail.com",
-    "numeroTelefono": 315482445,
+    "numeroTelefono": 30245,
     "idPersona": 1,
     "sexoString": "MASCULINO"
   }
