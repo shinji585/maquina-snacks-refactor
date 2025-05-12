@@ -1,92 +1,182 @@
 {
   "1": {
-    "Saludable": {
-      "precio": 2.99,
-      "nombre": "Barra Proteica de Chocolate",
+    "protein_bar_gold_standard": {
+      "precio": 24.99,
+      "nombre": "Protein Bar Gold Standard",
       "idSnack": 1,
-      "cantidad": 40,
-      "tipo": "Barra"
+      "cantidad": 3,
+      "tipo": "barra proteica"
     }
   },
   "2": {
-    "Saludable": {
-      "precio": 3.25,
-      "nombre": "Batido de Proteína Vegano",
+    "combat_crunch": {
+      "precio": 26.99,
+      "nombre": "Combat Crunch Protein Bar",
       "idSnack": 2,
-      "cantidad": 30,
-      "tipo": "Bebida"
+      "cantidad": 4,
+      "tipo": "barra proteica"
     }
   },
   "3": {
-    "Saludable": {
-      "precio": 1.99,
-      "nombre": "Mix de Nueces y Semillas",
+    "protein_chips": {
+      "precio": 22.99,
+      "nombre": "Quest Protein Chips",
       "idSnack": 3,
-      "cantidad": 50,
-      "tipo": "Snack"
+      "cantidad": 7,
+      "tipo": "snack salado"
     }
   },
   "4": {
-    "Saludable": {
-      "precio": 2.49,
-      "nombre": "Chips de Kale Orgánicos",
+    "protein_cookies": {
+      "precio": 16.99,
+      "nombre": "Lenny \u0026 Larry\u0027s Protein Cookies",
       "idSnack": 4,
-      "cantidad": 35,
-      "tipo": "Snack"
+      "cantidad": 5,
+      "tipo": "snack dulce"
     }
   },
   "5": {
-    "Saludable": {
-      "precio": 2.75,
-      "nombre": "Bites de Avena y Chía",
+    "amino_energy": {
+      "precio": 29.99,
+      "nombre": "Essential AMINO ENERGY",
       "idSnack": 5,
-      "cantidad": 38,
-      "tipo": "Snack"
+      "cantidad": 30,
+      "tipo": "suplemento"
     }
   },
   "6": {
-    "Saludable": {
-      "precio": 2.50,
-      "nombre": "Smoothie Verde Detox",
+    "clear_whey": {
+      "precio": 39.99,
+      "nombre": "MyProtein Clear Whey Isolate",
       "idSnack": 6,
-      "cantidad": 25,
-      "tipo": "Bebida"
+      "cantidad": 20,
+      "tipo": "bebida proteica"
     }
   },
   "7": {
-    "Saludable": {
-      "precio": 3.10,
-      "nombre": "Barra Keto de Almendra",
+    "protein_water": {
+      "precio": 24.99,
+      "nombre": "Protein2o Protein Water",
       "idSnack": 7,
-      "cantidad": 40,
-      "tipo": "Barra"
+      "cantidad": 12,
+      "tipo": "bebida proteica"
     }
   },
   "8": {
-    "Saludable": {
-      "precio": 1.80,
-      "nombre": "Chips de Garbanzo",
+    "protein_puffs": {
+      "precio": 19.99,
+      "nombre": "Shrewd Food Protein Puffs",
       "idSnack": 8,
-      "cantidad": 45,
-      "tipo": "Snack"
+      "cantidad": 8,
+      "tipo": "snack salado"
     }
   },
   "9": {
-    "Saludable": {
-      "precio": 3.35,
-      "nombre": "Yogur Griego con Miel",
+    "creatina_monohidratada": {
+      "precio": 19.99,
+      "nombre": "Optimum Nutrition Creatina Monohidratada",
       "idSnack": 9,
-      "cantidad": 28,
-      "tipo": "Lácteo"
+      "cantidad": 30,
+      "tipo": "suplemento"
     }
   },
   "10": {
-    "Saludable": {
-      "precio": 2.60,
-      "nombre": "Galletas de Avena sin Azúcar",
+    "protein_coffee": {
+      "precio": 34.99,
+      "nombre": "ISOPURE Protein Coffee",
       "idSnack": 10,
+      "cantidad": 15,
+      "tipo": "bebida proteica"
+    }
+  },
+  "11": {
+    "protein_brownies": {
+      "precio": 29.99,
+      "nombre": "Grenade Carb Killa Protein Brownies",
+      "idSnack": 11,
+      "cantidad": 12,
+      "tipo": "snack dulce"
+    }
+  },
+  "12": {
+    "pre_workout": {
+      "precio": 42.99,
+      "nombre": "C4 Ultimate Pre-Workout",
+      "idSnack": 12,
+      "cantidad": 20,
+      "tipo": "suplemento"
+    }
+  },
+  "13": {
+    "beef_jerky": {
+      "precio": 32.99,
+      "nombre": "Chef\u0027s Cut Real Jerky",
+      "idSnack": 13,
+      "cantidad": 8,
+      "tipo": "snack proteico"
+    }
+  },
+  "14": {
+    "protein_almonds": {
+      "precio": 18.99,
+      "nombre": "Power Up Protein-Packed Almonds",
+      "idSnack": 14,
+      "cantidad": 14,
+      "tipo": "frutos secos"
+    }
+  },
+  "15": {
+    "mass_gainer": {
+      "precio": 64.99,
+      "nombre": "Serious Mass Gainer",
+      "idSnack": 15,
+      "cantidad": 16,
+      "tipo": "suplemento"
+    }
+  },
+  "16": {
+    "bcaa_powder": {
+      "precio": 24.99,
+      "nombre": "Xtend Original BCAA Powder",
+      "idSnack": 16,
       "cantidad": 30,
-      "tipo": "Galleta"
+      "tipo": "suplemento"
+    }
+  },
+  "17": {
+    "protein_wafers": {
+      "precio": 19.99,
+      "nombre": "Barebells Protein Wafers",
+      "idSnack": 17,
+      "cantidad": 12,
+      "tipo": "snack dulce"
+    }
+  },
+  "18": {
+    "zma": {
+      "precio": 29.99,
+      "nombre": "MuscleTech ZMA",
+      "idSnack": 18,
+      "cantidad": 90,
+      "tipo": "recuperación"
+    }
+  },
+  "19": {
+    "protein_pancake": {
+      "precio": 14.99,
+      "nombre": "Flapjacked Protein Pancake Mix",
+      "idSnack": 19,
+      "cantidad": 12,
+      "tipo": "desayuno proteico"
+    }
+  },
+  "20": {
+    "nitric_oxide": {
+      "precio": 39.99,
+      "nombre": "BSN Nitrix 2.0",
+      "idSnack": 20,
+      "cantidad": 180,
+      "tipo": "suplemento"
     }
   }
 }
