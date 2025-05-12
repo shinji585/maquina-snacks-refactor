@@ -11,26 +11,41 @@ import com.google.common.collect.Table;
 public class Cliente extends Persona {
 
     private int clienteID;
-    private static int id = 1;
+    private static int id = 1; // Variable estática para asignar IDs incrementales
     private BigDecimal saldo;
     private Table<LocalDateTime, Integer, Compra> historialCompras; 
 
     // creamos un metodo privado inicializador 
     private void inicializadorCliente(){
-          // aumentamos el id del cliente en cada instanica
-          this.clienteID = id++;
           this.historialCompras = HashBasedTable.create();
     }
 
     public Cliente(){
         inicializadorCliente();
+        this.clienteID = id++; // Solo incrementamos id automáticamente en el constructor vacío
         this.saldo = BigDecimal.ZERO;
     }
 
-    // constructo para definir los datos del cliente 
-    public Cliente(String nombre, int edad, String apellidos, boolean sexo, String nacionalidad, String direccion,String correoElectronico, long numeroTelefono,BigDecimal saldo) throws Exception {
+    // Constructor para definir los datos del cliente
+    public Cliente(String nombre, String edad, String apellidos, boolean sexo, String nacionalidad, String direccion, String correoElectronico, String numeroTelefono, BigDecimal saldo) throws Exception {
         super(nombre, edad, apellidos, sexo, nacionalidad, direccion, correoElectronico, numeroTelefono);
         inicializadorCliente();
+        this.clienteID = id++; // Asignamos el ID automáticamente y lo incrementamos
+        if (saldo.compareTo(BigDecimal.ZERO) < 0){
+            throw new Exception("no puede ingresar un saldo menor a cero");
+        }else{
+            this.saldo = saldo;
+        }
+    }
+
+    // Constructor adicional que permite especificar un ID
+    public Cliente(int clienteID, String nombre, String edad, String apellidos, boolean sexo, String nacionalidad, String direccion, String correoElectronico, String numeroTelefono, BigDecimal saldo) throws Exception {
+        super(nombre, edad, apellidos, sexo, nacionalidad, direccion, correoElectronico, numeroTelefono);
+        inicializadorCliente();
+        this.clienteID = clienteID;
+        if (clienteID >= id) {
+            id = clienteID + 1; // Actualizamos el contador estático si es necesario
+        }
         if (saldo.compareTo(BigDecimal.ZERO) < 0){
             throw new Exception("no puede ingresar un saldo menor a cero");
         }else{
@@ -116,10 +131,32 @@ public class Cliente extends Persona {
         return this.clienteID;
     }
 
+    // Método para establecer el ID manualmente
+    public void setID(int id) {
+        this.clienteID = id;
+    }
+
     public void setSaldo(BigDecimal nuevoSaldo) {
         if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("El saldo no puede ser negativo");
         }
         this.saldo = nuevoSaldo;
+    }
+    
+    // Método estático para reiniciar el contador de ID
+    public static void reiniciarContador() {
+        id = 1;
+    }
+    
+    // Método estático para establecer el contador de ID a un valor específico
+    public static void establecerContador(int nuevoValor) {
+        if (nuevoValor > 0) {
+            id = nuevoValor;
+        }
+    }
+    
+    // Método estático para obtener el valor actual del contador
+    public static int obtenerContadorActual() {
+        return id;
     }
 }

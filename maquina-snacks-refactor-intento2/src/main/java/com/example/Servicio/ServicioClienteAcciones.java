@@ -111,7 +111,7 @@ public class ServicioClienteAcciones {
             String apellidos = scanner.nextLine().trim();
             
             System.out.print("Ingrese la edad: ");
-            int edad = Integer.parseInt(scanner.nextLine().trim());
+            String edad = scanner.nextLine().trim();
             
             System.out.print("Ingrese el sexo (M/F): ");
             boolean sexo = scanner.nextLine().trim().equalsIgnoreCase("M");
@@ -126,12 +126,13 @@ public class ServicioClienteAcciones {
             String correo = scanner.nextLine().trim();
             
             System.out.print("Ingrese el número de teléfono: ");
-            long telefono = Long.parseLong(scanner.nextLine().trim());
+            String telefono = scanner.nextLine().trim();
             
             System.out.print("Ingrese el saldo inicial: $");
             BigDecimal saldo = new BigDecimal(scanner.nextLine().trim());
             
-            Cliente nuevoCliente = new Cliente(nombre, edad, apellidos, sexo, nacionalidad, 
+            // Usamos el constructor modificado que acepta un ID específico
+            Cliente nuevoCliente = new Cliente(id, nombre, edad, apellidos, sexo, nacionalidad, 
                                             direccion, correo, telefono, saldo);
             
             boolean resultado = servicioCliente.registrarCliente(nuevoCliente);
