@@ -59,6 +59,7 @@ public class config extends javax.swing.JFrame {
         JLB_cambiar_pass.setFont(new java.awt.Font("Gadugi", 3, 14)); // NOI18N
         JLB_cambiar_pass.setForeground(new java.awt.Color(255, 255, 255));
         JLB_cambiar_pass.setText("Cambiar contraseña");
+        JLB_cambiar_pass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JLB_cambiar_pass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JLB_cambiar_passMouseClicked(evt);

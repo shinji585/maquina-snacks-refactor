@@ -36,7 +36,7 @@ public class cambio_pass extends javax.swing.JFrame {
         JTX_Enter_new_pass = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         JLB_Ingrese_pass = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        JLB_ingrese_new_pass = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,9 +95,9 @@ public class cambio_pass extends javax.swing.JFrame {
         JLB_Ingrese_pass.setText("Ingrese su contra..");
         jPanel1.add(JLB_Ingrese_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 140, 30));
 
-        jLabel4.setFont(new java.awt.Font("Gadugi", 3, 12)); // NOI18N
-        jLabel4.setText("Ingrese nueva contra..");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 140, 30));
+        JLB_ingrese_new_pass.setFont(new java.awt.Font("Gadugi", 3, 12)); // NOI18N
+        JLB_ingrese_new_pass.setText("Ingrese nueva contra..");
+        jPanel1.add(JLB_ingrese_new_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 140, 30));
 
         jLabel3.setBackground(new java.awt.Color(102, 153, 255));
         jLabel3.setFont(new java.awt.Font("Gadugi", 3, 24)); // NOI18N
@@ -106,16 +106,7 @@ public class cambio_pass extends javax.swing.JFrame {
         jLabel3.setText("\"Sin esfuerzo no hay gloria\"");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 340, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -168,12 +159,12 @@ public class cambio_pass extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_RETURN_CONFIG;
     private javax.swing.JLabel JLB_Ingrese_pass;
+    private javax.swing.JLabel JLB_ingrese_new_pass;
     private javax.swing.JTextField JTX_Enter_new_pass;
     private javax.swing.JTextField JTX_Ingrese_antigua_contra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

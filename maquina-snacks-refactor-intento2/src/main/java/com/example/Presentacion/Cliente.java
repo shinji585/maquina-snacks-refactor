@@ -14,6 +14,8 @@ import java.awt.event.*;
  */
 public class Cliente extends javax.swing.JFrame {
     
+    
+    
 
     ImageIcon[] imagenes;
     ImageIcon[] imagenes2;
@@ -29,10 +31,13 @@ public class Cliente extends javax.swing.JFrame {
     int index4 = 0;
     
     public Cliente() {
+        
         initComponents();
         iniciarCarrusel();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
+         
+
 
     }
     
