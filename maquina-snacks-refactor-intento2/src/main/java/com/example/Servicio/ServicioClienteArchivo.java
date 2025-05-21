@@ -4,14 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.example.Dominio.Cliente;
@@ -21,9 +17,6 @@ import com.google.common.collect.Table;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.raven.model.ModelUser;
 
 public class ServicioClienteArchivo implements IservicioCliente {
     private static final String ARCHIVO_CLIENTE_JSON = "clientes.json";
@@ -31,28 +24,27 @@ public class ServicioClienteArchivo implements IservicioCliente {
     private final Gson gson;
     private final Map<Integer, Cliente> clientes;
     private final PDFGeneratorService pdfService;
-
+    
     public ServicioClienteArchivo() {
         this.clientes = new HashMap<>();
         this.archivo = new File(ARCHIVO_CLIENTE_JSON);
         this.pdfService = new PDFGeneratorService();
         this.gson = crearGsonConfigurado();
-
+        
         inicializarArchivoClientes();
     }
-
+    
     private Gson crearGsonConfigurado() {
         GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
-
-        Type tableType = new TypeToken<Table<LocalDateTime, Integer, Compra>>() {
-        }.getType();
-        gsonBuilder.registerTypeAdapter(tableType,
-                new TableTypeAdapter<>(LocalDateTime.class, Integer.class, Compra.class));
-
+        
+        Type tableType = new TypeToken<Table<LocalDateTime, Integer, Compra>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(tableType, 
+            new TableTypeAdapter<>(LocalDateTime.class, Integer.class, Compra.class));
+        
         return gsonBuilder.create();
     }
-
+    
     private void inicializarArchivoClientes() {
         try {
             if (!archivo.exists()) {
@@ -67,16 +59,15 @@ public class ServicioClienteArchivo implements IservicioCliente {
             throw new RuntimeException("No se pudo inicializar el servicio de clientes", e);
         }
     }
-
-    private void cargarClientes() {
+    
+    public void cargarClientes() {
         try (FileReader reader = new FileReader(archivo)) {
             if (archivo.length() == 0) {
                 System.out.println("El archivo de clientes está vacío.");
                 return;
             }
 
-            Type tipoMapa = new TypeToken<Map<Integer, Cliente>>() {
-            }.getType();
+            Type tipoMapa = new TypeToken<Map<Integer, Cliente>>(){}.getType();
             Map<Integer, Cliente> clientesCargados = gson.fromJson(reader, tipoMapa);
 
             if (clientesCargados == null) {
@@ -107,10 +98,9 @@ public class ServicioClienteArchivo implements IservicioCliente {
             System.err.println("No se pudo eliminar el archivo corrupto.");
         }
     }
-
+    
     private void guardarClientesEnArchivo() {
         try (FileWriter writer = new FileWriter(archivo)) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(clientes, writer);
         } catch (IOException e) {
             System.err.println("Error al guardar clientes: " + e.getMessage());
@@ -118,51 +108,12 @@ public class ServicioClienteArchivo implements IservicioCliente {
         }
     }
 
-    public List<Cliente> cargarListaClientes() {
-        File file = new File("cliente.json");
-
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (Reader reader = new FileReader(file)) {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<Cliente>>() {
-            }.getType();
-            List<Cliente> lista = gson.fromJson(reader, listType);
-            return lista != null ? lista : new ArrayList<>();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    public void guardarCliente(Cliente nuevoCliente) {
-        List<Cliente> listaClientes = cargarListaClientes(); // carga los existentes
-        listaClientes.add(nuevoCliente); // agrega el nuevo
-        guardarClientesEnArchivo(); // sobrescribe el JSON
-    }
-
-    public int generarNuevoID() {
-    List<Cliente> listaClientes = cargarListaClientes();
-
-    int maxID = 0;
-    for (Cliente cliente : listaClientes) {
-        if (cliente.getID() > maxID) {
-            maxID = cliente.getID();
-        }
-    }
-
-    return maxID + 1;
-}
-
-
     @Override
     public boolean registrarCliente(Cliente cliente) {
         if (cliente == null || existeCliente(cliente.getID())) {
             return false;
         }
-
+        
         clientes.put(cliente.getID(), cliente);
         guardarClientesEnArchivo();
         return true;
@@ -175,31 +126,7 @@ public class ServicioClienteArchivo implements IservicioCliente {
 
     @Override
     public Map<Integer, Cliente> obtenerTodosLosClientes() {
-        File file = new File(ARCHIVO_CLIENTE_JSON); // Asegúrate que sea la misma ruta que usas al guardar
-        Map<Integer, Cliente> clientes = new HashMap<>();
-
-        if (!file.exists()) {
-            return clientes; // Retorna un mapa vacío si no existe el archivo
-        }
-
-        try (Reader reader = new FileReader(file)) {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<Cliente>>() {
-            }.getType();
-
-            List<Cliente> lista = gson.fromJson(reader, listType);
-
-            if (lista != null) {
-                for (Cliente cliente : lista) {
-                    clientes.put(cliente.getID(), cliente);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return clientes;
+        return new HashMap<>(clientes);
     }
 
     @Override
@@ -207,7 +134,7 @@ public class ServicioClienteArchivo implements IservicioCliente {
         if (cliente == null || !existeCliente(cliente.getID())) {
             return false;
         }
-
+        
         clientes.put(cliente.getID(), cliente);
         guardarClientesEnArchivo();
         return true;
@@ -218,7 +145,7 @@ public class ServicioClienteArchivo implements IservicioCliente {
         if (id == null || !clientes.containsKey(id)) {
             return false;
         }
-
+        
         clientes.remove(id);
         guardarClientesEnArchivo();
         return true;
@@ -229,20 +156,20 @@ public class ServicioClienteArchivo implements IservicioCliente {
         if (cliente == null || compra == null) {
             return false;
         }
-
+        
         Table<LocalDateTime, Integer, Compra> historial = cliente.verhistorialCompras();
         if (historial == null) {
             cliente.setHistorialCompras(HashBasedTable.create());
             historial = cliente.verhistorialCompras();
         }
-
+        
         historial.put(compra.getfecha(), compra.getIDCompra(), compra);
-
+        
         if (!actualizarCliente(cliente)) {
             System.err.println("No se pudo actualizar el cliente después de registrar la compra");
             return false;
         }
-
+        
         generarReciboCompra(compra);
         return true;
     }
@@ -263,13 +190,13 @@ public class ServicioClienteArchivo implements IservicioCliente {
             System.err.println("Cliente no encontrado: " + idCliente);
             return null;
         }
-
+        
         Table<LocalDateTime, Integer, Compra> historial = cliente.verhistorialCompras();
         if (historial == null || historial.isEmpty()) {
             System.out.println("El cliente no tiene compras registradas.");
             historial = HashBasedTable.create(); // PDF vacío
         }
-
+        
         return pdfService.generarHistorialClientePDF(cliente, historial);
     }
 
@@ -279,12 +206,12 @@ public class ServicioClienteArchivo implements IservicioCliente {
         if (cliente == null) {
             return BigDecimal.ZERO;
         }
-
+        
         Table<LocalDateTime, Integer, Compra> historial = cliente.verhistorialCompras();
         if (historial == null || historial.isEmpty()) {
             return BigDecimal.ZERO;
         }
-
+        
         return historial.values().stream()
                 .map(Compra::calcularTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -316,61 +243,21 @@ public class ServicioClienteArchivo implements IservicioCliente {
                 }
             }
         }
-
+        
         System.err.println("Compra no encontrada: " + idCompra);
         return null;
     }
-
+    
     @Override
     public Cliente buscarCliente(int idCliente) {
         return obtenerClientePorID(idCliente);
     }
-
+    
     @Override
     public void guardarHistorial(int idCliente) {
         Cliente cliente = obtenerClientePorID(idCliente);
         if (cliente != null) {
             actualizarCliente(cliente);
-        }
-    }
-
-    public static void saveUser(ModelUser newUser) {
-        List<ModelUser> users = loadUsers();
-        users.add(newUser);
-        try (Writer writer = new FileWriter(ARCHIVO_CLIENTE_JSON)) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(users, writer);
-            ;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static List<ModelUser> loadUsers() {
-        File file = new File(ARCHIVO_CLIENTE_JSON);
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (Reader reader = new FileReader(file)) {
-            Gson gson = new Gson();
-            JsonElement element = JsonParser.parseReader(reader);
-
-            List<ModelUser> users = new ArrayList<>();
-
-            if (element.isJsonArray()) {
-                Type listType = new TypeToken<ArrayList<ModelUser>>() {
-                }.getType();
-                users = gson.fromJson(element, listType);
-            } else if (element.isJsonObject()) {
-                ModelUser singleUser = gson.fromJson(element, ModelUser.class);
-                users.add(singleUser);
-            }
-
-            return users;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
         }
     }
 }

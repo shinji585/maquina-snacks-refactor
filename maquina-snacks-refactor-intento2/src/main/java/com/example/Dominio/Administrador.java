@@ -5,9 +5,6 @@ public class Administrador extends Persona {
     private int administradorID;
     private static int id = 1;
 
-    public Administrador() {
-        this.administradorID = id++;
-    }
 
     public Administrador(String nombre, String edad, String apellidos, boolean sexo, String nacionalidad, String direccion, String correoElectronico, String numeroTelefono) throws Exception {
         super(nombre, edad, apellidos, sexo, nacionalidad, direccion, correoElectronico, numeroTelefono);

@@ -1,9 +1,9 @@
 package com.raven.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.example.Dominio.Cliente;
+import com.example.Servicio.JSONStructureHelper;
 import com.example.Servicio.ServicioClienteArchivo;
 import com.raven.model.ModelLogin;
 import com.raven.model.ModelUser;
@@ -14,31 +14,38 @@ public class ServiceUser {
 
     public ServiceUser() {
         this.servicioCliente = new ServicioClienteArchivo();
+        // Asegúrate de que el archivo JSON esté correctamente inicializado
+        JSONStructureHelper.inicializarArchivoJSON();
     }
 
     public ModelUser login(ModelLogin login) {
-        Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
+    Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
 
-        for (Cliente cliente : clientes.values()) {
-            if (cliente.getCorreoElectronico().equalsIgnoreCase(login.getEmail())
-                    && cliente.getContraseña().equals(login.getPassword())) {
+    for (Cliente cliente : clientes.values()) {
+        if (cliente.getCorreoElectronico().equalsIgnoreCase(login.getEmail()) &&
+            cliente.getContraseña().equals(login.getPassword())) {
 
-                return new ModelUser(
-                        cliente.getID(),
-                        cliente.getNombre(),
-                        cliente.getCorreoElectronico(),
-                        "" // No devolver la contraseña
-                );
-            }
+            return new ModelUser(
+                cliente.getID(),
+                cliente.getNombre(),
+                cliente.getCorreoElectronico(),
+                "" // No devuelvas la contraseña
+            );
         }
-
-        return null;
     }
 
+    return null;
+}
+
+
     public boolean checkDuplicateEmail(String email) {
-        Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
-        for (Cliente cliente : clientes.values()) {
-            if (cliente.getCorreoElectronico().equalsIgnoreCase(email)) {
+        if (email == null) return false;
+        
+        Map<Integer, Cliente> clientesMap = JSONStructureHelper.asegurarMapaClientes();
+        
+        for (Cliente cliente : clientesMap.values()) {
+            String correoCliente = cliente.getCorreoElectronico();
+            if (correoCliente != null && correoCliente.equalsIgnoreCase(email)) {
                 return true;
             }
         }
@@ -46,9 +53,13 @@ public class ServiceUser {
     }
 
     public boolean checkDuplicateUser(String nombre) {
-        Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
-        for (Cliente cliente : clientes.values()) {
-            if (cliente.getNombre().equalsIgnoreCase(nombre)) {
+        if (nombre == null) return false;
+        
+        Map<Integer, Cliente> clientesMap = JSONStructureHelper.asegurarMapaClientes();
+        
+        for (Cliente cliente : clientesMap.values()) {
+            String nombreCliente = cliente.getNombre();
+            if (nombreCliente != null && nombreCliente.equalsIgnoreCase(nombre)) {
                 return true;
             }
         }
@@ -56,50 +67,42 @@ public class ServiceUser {
     }
 
     public boolean registerUser(ModelUser nuevoUsuario) {
-    // 1) Carga todos los clientes existentes
-    List<Cliente> lista = servicioCliente.cargarListaClientes();
+        if (nuevoUsuario == null) return false;
 
-    // 2) Verifica duplicados...
-    //    (como hacías con checkDuplicateEmail / checkDuplicateUser)
-
-    // 3) Genera ID y crea el Cliente de dominio
-    int nuevoID = lista.stream()
-                       .mapToInt(Cliente::getID)
-                       .max()
-                       .orElse(0) + 1;
-
-    Cliente nuevo = new Cliente(
-        nuevoID,
-        nuevoUsuario.getUserName(),
-        nuevoUsuario.getEmail(),
-        nuevoUsuario.getPassword()
-    );
-
-    // 4) Persiste en JSON
-    servicioCliente.guardarCliente(nuevo);
-    return true;
-}
-
+        // Verificar si el nombre de usuario ya existe
+        if (checkDuplicateUser(nuevoUsuario.getUserName())) {
+            return false;
+        }
+        // Verificar si el correo ya existe
+        if (checkDuplicateEmail(nuevoUsuario.getEmail())) {
+            return false;
+        }  
+        
+        // Usar el helper para registrar
+        return JSONStructureHelper.registrarNuevoUsuario(nuevoUsuario);
+    }
 
     public boolean verifyCodeWithUser(int userID, String inputCode) {
-        Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
-        Cliente cliente = clientes.get(userID);
-
-        if (cliente != null && inputCode.equals(cliente.getCodigoVerificacion())) {
-            return true;
-        }
-        return false;
+        if (inputCode == null) return false;
+        
+        Map<Integer, Cliente> clientesMap = JSONStructureHelper.asegurarMapaClientes();
+        Cliente cliente = clientesMap.get(userID);
+        
+        String codigoCliente = cliente != null ? cliente.getCodigoVerificacion() : null;
+        return codigoCliente != null && codigoCliente.equals(inputCode);
     }
 
     public void doneVerify(int userID) {
-        Map<Integer, Cliente> clientes = servicioCliente.obtenerTodosLosClientes();
-        Cliente cliente = clientes.get(userID);
-
+        Map<Integer, Cliente> clientesMap = JSONStructureHelper.asegurarMapaClientes();
+        Cliente cliente = clientesMap.get(userID);
+        
         if (cliente != null) {
             cliente.setVerificado(true);
-            cliente.setCodigoVerificacion(null); // Opcional: limpiar el código
-            servicioCliente.actualizarCliente(cliente);
+            cliente.setCodigoVerificacion(null); // Limpiar el código
+            
+            // Actualizar el mapa y guardar
+            clientesMap.put(userID, cliente);
+            JSONStructureHelper.guardarMapaClientes(clientesMap);
         }
     }
-
 }

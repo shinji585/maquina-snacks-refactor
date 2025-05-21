@@ -1,1 +1,16 @@
-{}
+{
+  "1": {
+    "clienteID": 1,
+    "verificado": false,
+    "contraseña": "Willmew232",
+    "historialCompras": {
+      "cells": []
+    },
+    "nombre": "will",
+    "edad": 0,
+    "sexo": false,
+    "correoElectronico": "will@gmail.com",
+    "numeroTelefono": 0,
+    "idPersona": 0
+  }
+}

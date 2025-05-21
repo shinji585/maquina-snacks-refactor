@@ -7,7 +7,8 @@ public class ModelUser {
     }
 
     public void setUserID(int userID) {
-        this.userID = id;
+        // Corregido: userID en lugar de id
+        this.userID = userID;
     }
 
     public String getUserName() {
@@ -43,7 +44,8 @@ public class ModelUser {
     }
 
     public ModelUser(int userID, String userName, String email, String password, String verifyCode) {
-        this.userID = id++;
+        // Utilizamos el ID proporcionado en lugar de autoincrementar
+        this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
@@ -51,17 +53,18 @@ public class ModelUser {
     }
 
     public ModelUser(int userID, String userName, String email, String password) {
-        this.userID = id++;
+        // Utilizamos el ID proporcionado en lugar de autoincrementar
+        this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
     }
 
     public ModelUser() {
+        // Constructor vacío necesario para Gson
     }
 
     private int userID;
-    private static int id = 1;
     private String userName;
     private String email;
     private String password;

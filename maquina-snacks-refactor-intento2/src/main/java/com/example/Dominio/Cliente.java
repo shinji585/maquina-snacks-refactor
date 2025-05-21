@@ -26,11 +26,11 @@ public class Cliente extends Persona {
         this.historialCompras = HashBasedTable.create();
     }
 
-    public Cliente(int nuevoID, String userName, String email, String contraseña){
+    public Cliente(int clienteID, String nombre, String correoElectronico, String contraseña) throws Exception {
+        super(nombre, correoElectronico);
         inicializadorCliente();
         this.contraseña = contraseña;
         this.clienteID = id++; // Solo incrementamos id automáticamente en el constructor vacío
-        this.saldo = BigDecimal.ZERO;
     }
 
     // Constructor para definir los datos del cliente

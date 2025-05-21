@@ -1,26 +1,37 @@
 package com.example.Presentacion;
 
-import com.raven.component.Message;
-import com.raven.component.PanelCover;
-import com.raven.component.PanelLoading;
-import com.raven.component.PanelLoginAndRegister;
-import com.raven.component.PanelVerifyCode;
-import com.example.Presentacion.MainSystem;
-import com.raven.model.ModelLogin;
-import com.raven.model.ModelMessage;
-import com.raven.model.ModelUser;
-import com.raven.service.ServiceMail;
-import com.raven.service.ServiceUser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+
 import javax.swing.JLayeredPane;
-import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+import com.example.Dominio.Cliente;
+import com.example.Servicio.PDFGeneratorService;
+import com.example.Servicio.ServicioClienteAcciones;
+import com.example.Servicio.ServicioClienteArchivo;
+import com.example.Servicio.ServicioCompraAcciones;
+import com.example.Servicio.ServicioCompraArchivo;
+import com.example.Servicio.ServicioReportesAcciones;
+import com.example.Servicio.ServicioSnacksArchivo;
+import com.raven.component.Message;
+import com.raven.component.PanelCover;
+import com.raven.component.PanelLoading;
+import com.raven.component.PanelLoginAndRegister;
+import com.raven.component.PanelVerifyCode;
+import com.raven.model.ModelLogin;
+import com.raven.model.ModelMessage;
+import com.raven.model.ModelUser;
+import com.raven.service.ServiceMail;
+import com.raven.service.ServiceUser;
+
+import net.miginfocom.swing.MigLayout;
 
 public class Main extends javax.swing.JFrame {
 
@@ -37,6 +48,7 @@ public class Main extends javax.swing.JFrame {
     private ServiceUser service;
 
     public Main() {
+        inicializarServicios();
         initComponents();
         init();
     }
@@ -115,9 +127,9 @@ public class Main extends javax.swing.JFrame {
         });
         verifyCode.addEventButtonOK((ActionEvent ae) -> {
             try {
-                ModelUser user = loginAndRegister.getUser();
-                if (service.verifyCodeWithUser(user.getUserID(), verifyCode.getInputCode())) {
-                    service.doneVerify(user.getUserID());
+                Cliente user = loginAndRegister.getUser();
+                if (service.verifyCodeWithUser(user.getID(), verifyCode.getInputCode())) {
+                    service.doneVerify(user.getID());
                     showMessage(Message.MessageType.SUCCESS, "Register success");
                     verifyCode.setVisible(false);
                 } else {
@@ -132,9 +144,9 @@ public class Main extends javax.swing.JFrame {
 
     private void register() {
     try {
-        ModelUser user = loginAndRegister.getUser();
-        if (service.verifyCodeWithUser(user.getUserID(), verifyCode.getInputCode())) {
-            service.doneVerify(user.getUserID());
+        Cliente user = loginAndRegister.getUser();
+        if (service.verifyCodeWithUser(user.getID(), verifyCode.getInputCode())) {
+            service.doneVerify(user.getID());
             showMessage(Message.MessageType.SUCCESS, "Register success");
             verifyCode.setVisible(false);
         } else {
@@ -293,6 +305,20 @@ public class Main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new Main().setVisible(true);
         });
+    }
+
+    private static void inicializarServicios() {
+        // Servicios de datos
+        ServicioSnacksArchivo servicioSnacks = new ServicioSnacksArchivo();
+        ServicioClienteArchivo servicioCliente = new ServicioClienteArchivo();
+        ServicioCompraArchivo servicioCompra = new ServicioCompraArchivo();
+        PDFGeneratorService pdfService = new PDFGeneratorService();
+        
+        // Servicios de acciones
+        ServicioClienteAcciones servicioClienteAcciones = new ServicioClienteAcciones(servicioCliente, pdfService);
+        ServicioCompraAcciones servicioCompraAcciones = new ServicioCompraAcciones(servicioCliente, servicioCompra, servicioSnacks, pdfService);
+        ServicioReportesAcciones servicioReportesAcciones = new ServicioReportesAcciones(servicioSnacks, servicioCliente, servicioCompra, 
+                                                              pdfService, servicioClienteAcciones, servicioCompraAcciones);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

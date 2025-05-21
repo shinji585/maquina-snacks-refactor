@@ -11,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import com.example.Dominio.Cliente;
 import com.example.Servicio.ServicioClienteArchivo;
 import com.raven.model.ModelLogin;
-import com.raven.model.ModelUser;
 import com.raven.swing.Button;
 import com.raven.swing.MyPasswordField;
 import com.raven.swing.MyTextField;
@@ -28,15 +28,17 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         return dataLogin;
     }
 
-    public ModelUser getUser() {
+    public Cliente getUser() {
         return user;
     }
 
-    private ModelUser user;
+    private Cliente user;
     private ModelLogin dataLogin;
 
     public PanelLoginAndRegister(ActionListener eventRegister, ActionListener eventLogin) {
         initComponents();
+        // Inicializar el servicio de cliente
+        servicioCliente = new ServicioClienteArchivo();
         initRegister(eventRegister);
         initLogin(eventLogin);
         login.setVisible(false);
@@ -64,9 +66,10 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         Button cmd = new Button();
         cmd.setBackground(new Color(48, 73, 240));
         cmd.setForeground(new Color(250, 250, 250));
-        cmd.addActionListener(eventRegister);
         cmd.setText("REGISTRARSE");
         register.add(cmd, "w 40%, h 40");
+
+        // Un solo ActionListener que maneja la validación y registro
         cmd.addActionListener(e -> {
             String userName = txtUser.getText().trim();
             String email = txtEmail.getText().trim();
@@ -78,13 +81,34 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
                 return;
             }
 
-            user = new ModelUser(0, userName, email, password);
-            eventRegister.actionPerformed(e); // Solo llama al registro si todo está bien
+            try {
+                // Crear un usuario temporal con ID 0 (se generará el ID correcto en el
+                // servicio)
+                user = new Cliente(0, userName, email, password);
 
-            // Borrar los campos después de registrar
-            txtUser.setText("");
-            txtEmail.setText("");
-            txtPass.setText("");
+                // Registrar el usuario
+                boolean registroExitoso = servicioCliente.registrarCliente(user);
+
+                if (registroExitoso) {
+                    JOptionPane.showMessageDialog(this, "Usuario registrado correctamente", "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                    // Notificar evento de registro exitoso
+                    eventRegister.actionPerformed(e);
+
+                    // Limpiar campos
+                    txtUser.setText("");
+                    txtEmail.setText("");
+                    txtPass.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo registrar. El correo ya existe.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al registrar: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
         });
     }
 
@@ -111,14 +135,29 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         Button cmd = new Button();
         cmd.setBackground(new Color(48, 73, 240));
         cmd.setForeground(new Color(250, 250, 250));
-        cmd.addActionListener(eventLogin);
         cmd.setText("INGRESAR");
         login.add(cmd, "w 40%, h 40");
+
+        // Un solo ActionListener para el inicio de sesión
         cmd.addActionListener((ActionEvent ae) -> {
             String email = txtEmail.getText().trim();
             String password = String.valueOf(txtPass.getPassword());
+
+            if (email.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor completa todos los campos.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Solo preparar el modelo y pasar al listener
             dataLogin = new ModelLogin(email, password);
+            eventLogin.actionPerformed(ae);
+
+            // Limpiar campos
+            txtEmail.setText("");
+            txtPass.setText("");
         });
+
     }
 
     public void showRegister(boolean show) {
