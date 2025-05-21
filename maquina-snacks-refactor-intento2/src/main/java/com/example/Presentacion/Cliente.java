@@ -31,6 +31,7 @@ public class Cliente extends javax.swing.JFrame {
     public Cliente() {
         initComponents();
         iniciarCarrusel();
+        this.setResizable(true);
         this.setLocationRelativeTo(null);
 
     }
@@ -64,7 +65,7 @@ public class Cliente extends javax.swing.JFrame {
         new ImageIcon(getClass().getResource("/y/t1.png"))
     };
 
-    // Timer para imagenLabel1
+    // Timer para Label1
     new Timer(5000, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             JLB_imagen_1.setIcon(resizeImage(imagenes[index1], JLB_imagen_1));
@@ -72,7 +73,7 @@ public class Cliente extends javax.swing.JFrame {
         }
     }).start();
 
-    // Timer para imagenLabel2
+    // Timer para Label2
     new Timer(3500, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             JLB_imagen_2.setIcon(resizeImage(imagenes2[index2], JLB_imagen_2));
@@ -80,7 +81,7 @@ public class Cliente extends javax.swing.JFrame {
         }
     }).start();
 
-    // Timer para imagenLabel3
+    // Timer para Label3
     new Timer(3500, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             JLB_imagen_3.setIcon(resizeImage(imagenes3[index3], JLB_imagen_3));
@@ -88,7 +89,7 @@ public class Cliente extends javax.swing.JFrame {
         }
     }).start();
     
-     // Timer para imagenLabel3
+     // Timer para Label3
     new Timer(3500, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             JLB_imagen_4.setIcon(resizeImage(imagenes3[index4], JLB_imagen_4));
@@ -129,7 +130,7 @@ public class Cliente extends javax.swing.JFrame {
         JLB_Report_Client = new javax.swing.JLabel();
         JLB_comunicarse = new javax.swing.JLabel();
         JLB_user_icon = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbtn_config = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         Jpanel_tabla_f = new javax.swing.JPanel();
@@ -184,12 +185,12 @@ public class Cliente extends javax.swing.JFrame {
         JLB_user_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JLB_user_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/avatar-design.png"))); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(48, 73, 240));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/settings_1.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbtn_config.setBackground(new java.awt.Color(48, 73, 240));
+        jbtn_config.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/settings_1.png"))); // NOI18N
+        jbtn_config.setBorder(null);
+        jbtn_config.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbtn_configActionPerformed(evt);
             }
         });
 
@@ -220,8 +221,8 @@ public class Cliente extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(JPanel_user_iconLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jbtn_config, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JPanel_user_iconLayout.setVerticalGroup(
@@ -241,9 +242,9 @@ public class Cliente extends javax.swing.JFrame {
                 .addComponent(JLB_comunicarse)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator_comunicarse, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(64, 64, 64)
+                .addComponent(jbtn_config, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         Bg.add(JPanel_user_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
@@ -486,9 +487,16 @@ public class Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowIconified
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbtn_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_configActionPerformed
+        new config().setVisible(true);
+        this.dispose();
+        
+
+
+
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbtn_configActionPerformed
 
     /**
      * @param args the command line arguments
@@ -544,7 +552,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JButton Jbtn_agregar_p;
     private javax.swing.JPanel Jpanel_tabla_f;
     private javax.swing.JPanel Panel_tabla;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -556,6 +563,7 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator_comunicarse;
     private javax.swing.JSeparator jSeparator_report;
     private javax.swing.JSeparator jSeparator_user;
+    private javax.swing.JButton jbtn_config;
     private javax.swing.JSeparator separator_busqueda;
     // End of variables declaration//GEN-END:variables
 }
