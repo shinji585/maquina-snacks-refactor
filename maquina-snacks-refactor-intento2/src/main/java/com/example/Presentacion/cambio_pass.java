@@ -41,6 +41,7 @@ public class cambio_pass extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snacks_Bums.com");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -53,7 +54,7 @@ public class cambio_pass extends javax.swing.JFrame {
         jLabel1.setText("Cambio de contraseña");
 
         JBTN_RETURN_CONFIG.setBackground(new java.awt.Color(102, 102, 255));
-        JBTN_RETURN_CONFIG.setFont(new java.awt.Font("Gadugi", 3, 14)); // NOI18N
+        JBTN_RETURN_CONFIG.setFont(new java.awt.Font("Gadugi", 2, 14)); // NOI18N
         JBTN_RETURN_CONFIG.setForeground(new java.awt.Color(255, 255, 255));
         JBTN_RETURN_CONFIG.setText("Atras");
         JBTN_RETURN_CONFIG.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +94,7 @@ public class cambio_pass extends javax.swing.JFrame {
 
         JLB_Ingrese_pass.setFont(new java.awt.Font("Gadugi", 3, 12)); // NOI18N
         JLB_Ingrese_pass.setText("Ingrese su contra..");
+        JLB_Ingrese_pass.setToolTipText("");
         jPanel1.add(JLB_Ingrese_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 140, 30));
 
         JLB_ingrese_new_pass.setFont(new java.awt.Font("Gadugi", 3, 12)); // NOI18N
@@ -106,7 +108,7 @@ public class cambio_pass extends javax.swing.JFrame {
         jLabel3.setText("\"Sin esfuerzo no hay gloria\"");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 340, 30));
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

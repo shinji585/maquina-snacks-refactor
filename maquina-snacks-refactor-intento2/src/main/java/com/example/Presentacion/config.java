@@ -35,6 +35,7 @@ public class config extends javax.swing.JFrame {
         JLB_cambiar_pass = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jbtn_return_client = new javax.swing.JButton();
+        JLB_Actializar_monto = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         JLB_TEXT = new javax.swing.JLabel();
         JLB_Icon_sport = new javax.swing.JLabel();
@@ -76,12 +77,22 @@ public class config extends javax.swing.JFrame {
         });
 
         jbtn_return_client.setBackground(new java.awt.Color(102, 102, 255));
-        jbtn_return_client.setFont(new java.awt.Font("Gadugi", 3, 14)); // NOI18N
+        jbtn_return_client.setFont(new java.awt.Font("Gadugi", 2, 14)); // NOI18N
         jbtn_return_client.setForeground(new java.awt.Color(255, 255, 255));
         jbtn_return_client.setText("Atras");
         jbtn_return_client.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtn_return_clientActionPerformed(evt);
+            }
+        });
+
+        JLB_Actializar_monto.setFont(new java.awt.Font("Gadugi", 3, 14)); // NOI18N
+        JLB_Actializar_monto.setForeground(new java.awt.Color(255, 255, 255));
+        JLB_Actializar_monto.setText("Actualizar monto");
+        JLB_Actializar_monto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JLB_Actializar_monto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JLB_Actializar_montoMouseClicked(evt);
             }
         });
 
@@ -93,32 +104,38 @@ public class config extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(32, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtn_return_client)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(JLB_cambiar_pass))
-                        .addContainerGap(32, Short.MAX_VALUE))))
+                        .addComponent(jbtn_return_client)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JLB_cambiar_pass)
+                    .addComponent(JLB_Actializar_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(64, 64, 64)
                 .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(JLB_Actializar_monto)
                 .addGap(18, 18, 18)
                 .addComponent(JLB_cambiar_pass)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                 .addComponent(jbtn_return_client)
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
 
         bg_config.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 180, 510));
@@ -198,6 +215,15 @@ public class config extends javax.swing.JFrame {
         
     }//GEN-LAST:event_JLB_cambiar_passMouseClicked
 
+    private void JLB_Actializar_montoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLB_Actializar_montoMouseClicked
+        new Actualizar_monto().setVisible(true);
+        this.dispose();
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JLB_Actializar_montoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -234,6 +260,7 @@ public class config extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLB_Actializar_monto;
     private javax.swing.JLabel JLB_Icon_sport;
     private javax.swing.JLabel JLB_TEXT;
     private javax.swing.JLabel JLB_cambiar_pass;
