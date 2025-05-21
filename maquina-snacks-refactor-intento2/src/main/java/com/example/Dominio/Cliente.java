@@ -11,19 +11,26 @@ import com.google.common.collect.Table;
 public class Cliente extends Persona {
 
     private int clienteID;
-    private static int id = 1; // Variable estática para asignar IDs incrementales
+    private static int id = 1;
+    private String codigoVerificacion;
+    private boolean verificado;
+    private String contraseña;// Variable estática para asignar IDs incrementales
     private BigDecimal saldo;
     private Table<LocalDateTime, Integer, Compra> historialCompras; 
 
     // creamos un metodo privado inicializador 
     private void inicializadorCliente(){
-          this.historialCompras = HashBasedTable.create();
+        this.contraseña = contraseña;
+        this.codigoVerificacion = codigoVerificacion;
+        this.verificado = verificado;
+        this.historialCompras = HashBasedTable.create();
     }
 
-    public Cliente(){
+    public Cliente(int clienteID, String nombre, String correoElectronico, String contraseña) throws Exception {
+        super(nombre, correoElectronico);
         inicializadorCliente();
+        this.contraseña = contraseña;
         this.clienteID = id++; // Solo incrementamos id automáticamente en el constructor vacío
-        this.saldo = BigDecimal.ZERO;
     }
 
     // Constructor para definir los datos del cliente
@@ -159,4 +166,30 @@ public class Cliente extends Persona {
     public static int obtenerContadorActual() {
         return id;
     }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public String getCodigoVerificacion() {
+        return codigoVerificacion;
+    }
+
+    public void setCodigoVerificacion(String codigoVerificacion) {
+        this.codigoVerificacion = codigoVerificacion;
+    }
+
+    public boolean isVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
+    }
+    
+    
 }

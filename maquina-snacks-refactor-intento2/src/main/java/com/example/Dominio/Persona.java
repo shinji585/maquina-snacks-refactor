@@ -15,7 +15,13 @@ public class Persona {
     private static int contadorPersona = 1;
     private String sexoString;
 
-    public Persona() {
+    public Persona(String nombre, String correoElectronico) {
+        this.nombre = nombre;
+        if (correoElectronico.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            this.correoElectronico = correoElectronico;
+        } else {
+            throw new IllegalArgumentException("El correo electronico no es correcto");
+        }
     }
 
     public Persona(String nombre, String edadString, String apellidos, boolean sexo, String nacionalidad,
@@ -61,6 +67,10 @@ public class Persona {
                 throw new IllegalArgumentException("El numero de telefono no es un numero");
             }
         }
+    }
+
+    public Persona() {
+        //TODO Auto-generated constructor stub
     }
 
     // creamos los getters and setters

@@ -14,9 +14,9 @@ import com.example.Dominio.Cliente;
 import com.example.Dominio.Compra;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.common.reflect.TypeToken;
 
 public class ServicioClienteArchivo implements IservicioCliente {
     private static final String ARCHIVO_CLIENTE_JSON = "clientes.json";
@@ -60,7 +60,7 @@ public class ServicioClienteArchivo implements IservicioCliente {
         }
     }
     
-    private void cargarClientes() {
+    public void cargarClientes() {
         try (FileReader reader = new FileReader(archivo)) {
             if (archivo.length() == 0) {
                 System.out.println("El archivo de clientes está vacío.");
