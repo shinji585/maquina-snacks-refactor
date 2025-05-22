@@ -10,9 +10,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import com.example.Dominio.Cliente;
 import com.example.Servicio.ServicioClienteArchivo;
+import com.example.Servicio.ServicioCompraArchivo;
+import com.example.Servicio.ServicioSnacksArchivo;
 import com.raven.model.ModelLogin;
 import com.raven.swing.Button;
 import com.raven.swing.MyPasswordField;
@@ -23,6 +26,8 @@ import net.miginfocom.swing.MigLayout;
 public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
     private ServicioClienteArchivo servicioCliente;
+    private ServicioSnacksArchivo servicioSnacks;
+    private ServicioCompraArchivo servicioCompra;
 
     public ModelLogin getDataLogin() {
         return dataLogin;
@@ -100,6 +105,9 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
                     txtUser.setText("");
                     txtEmail.setText("");
                     txtPass.setText("");
+
+                    // Cambiar a la vista de inicio de sesión
+
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo registrar. El correo ya existe.",
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -151,11 +159,21 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
             // Solo preparar el modelo y pasar al listener
             dataLogin = new ModelLogin(email, password);
-            eventLogin.actionPerformed(ae);
+            //eventLogin.actionPerformed(ae);
 
             // Limpiar campos
             txtEmail.setText("");
             txtPass.setText("");
+
+            com.example.Presentacion.Cliente clienteWindow = new com.example.Presentacion.Cliente();
+            // If Cliente has setter methods for services, use them:
+            // clienteWindow.setServicioSnacks(servicioSnacks);
+            // clienteWindow.setServicioCompra(servicioCompra);
+            // clienteWindow.setServicioCliente(servicioCliente);
+            clienteWindow.setVisible(true);
+            SwingUtilities.getWindowAncestor(this).dispose();
+
+
         });
 
     }

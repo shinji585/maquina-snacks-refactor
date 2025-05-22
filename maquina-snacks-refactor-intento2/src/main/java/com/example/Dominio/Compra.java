@@ -1,6 +1,7 @@
-package com.example.Dominio;
+ package com.example.Dominio;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 public class Compra {
@@ -88,6 +89,22 @@ public class Compra {
     return this.Idcompra;
   }
  
+  public void setIdcompra(Integer idcompra) {
+    Idcompra = idcompra;
+  }
+
+  public void setFecha(LocalDateTime fecha) {
+    this.fecha = fecha;
+  }
+
+  public void setSnacksComprados(Table<Integer, String, Snack> snacksComprados) {
+    this.snacksComprados = snacksComprados;
+  }
+
+  public static void setContadorCompras(int contadorCompras) {
+    Compra.contadorCompras = contadorCompras;
+  }
+
   public LocalDateTime getfecha() {
     return this.fecha;
   }

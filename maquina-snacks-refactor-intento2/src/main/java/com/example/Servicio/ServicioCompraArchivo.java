@@ -3,11 +3,11 @@ package com.example.Servicio;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,11 +39,29 @@ public class ServicioCompraArchivo implements IservicioCompra {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
         this.gson = gsonBuilder.create();
-        
-        cargarCompras();
+        cargarComprasDesdeJSON();
     }
 
-    private void cargarCompras() {
+    private void cargarComprasDesdeJSON() {
+        try (FileReader reader = new FileReader(ARCHIVO_COMPRAS)) {
+            Type tableType = new TypeToken<Table<Integer, Integer, Compra>>(){}.getType();
+            compras = gson.fromJson(reader, tableType);
+        } catch (IOException e) {
+            compras = HashBasedTable.create(); // Tabla vacía si hay error
+        }
+    }
+    public void guardarComprasEnJSON() {
+        try (FileWriter writer = new FileWriter(ARCHIVO_COMPRAS)) {
+            gson.toJson(compras, writer);
+        } catch (IOException e) {
+            System.err.println("Error al guardar JSON: " + e.getMessage());
+        }
+    }
+     public Table<Integer, Integer, Compra> obtenerComprasPorCliente(int idCliente) {
+        return (Table<Integer, Integer, Compra>) compras.row(idCliente); // Todas las compras del cliente
+    }
+
+    public void cargarCompras() {
         try (FileReader reader = new FileReader(ARCHIVO_COMPRAS)) {
             Type type = new TypeToken<Map<Integer, Map<Integer, Compra>>>(){}.getType();
             Map<Integer, Map<Integer, Compra>> datos = gson.fromJson(reader, type);
@@ -62,8 +80,8 @@ public class ServicioCompraArchivo implements IservicioCompra {
             System.out.println("Error al cargar compras: " + e.getMessage());
         }
     }
-
-    private void guardarCompras() {
+    @Override
+    public Snack guardarCompras() {
         try (FileWriter writer = new FileWriter(ARCHIVO_COMPRAS)) {
             Map<Integer, Map<Integer, Compra>> datos = new HashMap<>();
             
@@ -75,6 +93,7 @@ public class ServicioCompraArchivo implements IservicioCompra {
         } catch (Exception e) {
             System.out.println("Error al guardar compras: " + e.getMessage());
         }
+        return null;
     }
 
     @Override
@@ -156,6 +175,22 @@ public class ServicioCompraArchivo implements IservicioCompra {
         
         return resultado;
     }
+
+    @Override
+    public Map<Integer, Compra> obtenerTodasLasComprasComoMapa() {
+    Map<Integer, Compra> todasLasCompras = new HashMap<>();
+    
+    // Iterar sobre todas las filas (clientes)
+    for (Integer idCliente : compras.rowKeySet()) {
+        Map<Integer, Compra> comprasCliente = compras.row(idCliente);
+        if (comprasCliente != null) {
+            // Agregar todas las compras del cliente al mapa resultado
+            todasLasCompras.putAll(comprasCliente);
+        }
+    }
+    
+    return todasLasCompras;
+}
 
     @Override
     public String generarReciboCompra(int idCompra) {

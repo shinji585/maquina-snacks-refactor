@@ -3,6 +3,7 @@ package com.example.Servicio;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -58,6 +59,14 @@ public class ServicioSnacksArchivo implements IservicioSnakcs {
     // luego lo agregamos al archivo
     this.agregarSnackArchivo();
   }
+
+  public Map<Integer, Snack> obtenerTodosLosSnacksComoMapa() {
+    Map<Integer, Snack> mapa = new HashMap<>();
+    for (Cell<Integer, String, Snack> cell : snacks.cellSet()) {
+        mapa.put(cell.getRowKey(), cell.getValue());
+    }
+    return mapa;
+}
 
   public void ObtenerSnacks() {
     File arFile = new File(ARCHIVO_JSON);
@@ -227,11 +236,9 @@ public void mostrarSnacks() {
         // Verificar stock
         if (snack.getCantidad() > 0) {
           snack.setCantidad(snack.getCantidad() - 1);
-          actualizarArchivo(); // Actualizar el archivo o base de datos
-          System.out.println("Compra realizada con éxito! Has comprado: " + snack.getNombre());
+          actualizarArchivo(); 
           return true;
         } else {
-          System.out.println("Lo sentimos, no hay stock disponible de ese snack.");
           return false;
         }
       }
@@ -250,16 +257,42 @@ public void mostrarSnacks() {
               if (snack.getCantidad() > 0) {
                   snack.setCantidad(snack.getCantidad() - 1);
                   actualizarArchivo(); // Actualizar el archivo después de la compra
-                  System.out.println("Compra realizada con éxito! Has comprado: " + snack.getNombre());
                   return snack; // Devuelve el snack comprado
               } else {
-                  System.out.println("Lo sentimos, no hay stock disponible de ese snack.");
                   return null;
               }
           }
       }
-      System.out.println("Snack con ID " + id + " no encontrado.");
       return null;
   }
+
+  @Override
+  public Snack comprarSnackJSON(int idSnack) throws Exception {
+    // 1. Buscar el snack en tu estructura de datos (ej: tabla hash)
+    Snack snack = snacks.get(idSnack, "default"); // Ajusta según tu implementación
+    
+    // 2. Validar existencia y stock
+    if (snack == null) {
+        throw new Exception("Snack no encontrado");
+    }
+    if (snack.getCantidad() <= 0) {
+        throw new Exception("Stock agotado");
+    }
+    
+    // 3. Reducir cantidad y guardar en JSON
+    snack.setCantidad(snack.getCantidad() - 1);
+    guardarSnacksEnJSON(); // Método para persistir en JSON
+    
+    return snack;
+}
+
+private void guardarSnacksEnJSON() {
+    try (FileWriter writer = new FileWriter("snacks.json")) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson(obtenerTodosLosSnacksComoMapa(), writer);
+    } catch (IOException e) {
+        System.err.println("Error al guardar en JSON: " + e.getMessage());
+    }
+}
   
 }

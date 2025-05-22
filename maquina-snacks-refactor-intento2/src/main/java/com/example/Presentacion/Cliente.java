@@ -3,126 +3,186 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.example.Presentacion;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import com.example.Dominio.Snack;
+import com.example.Servicio.IservicioCliente;
+import com.example.Servicio.IservicioCompra;
+import com.example.Servicio.IservicioSnakcs;
+import com.example.Servicio.ServicioSnacksArchivo;
+
 import java.awt.*;
 import java.awt.event.*;
-
 
 /**
  *
  * @author Synd
  */
 public class Cliente extends javax.swing.JFrame {
-    
-    
-    
 
     ImageIcon[] imagenes;
     ImageIcon[] imagenes2;
     ImageIcon[] imagenes3;
     ImageIcon[] imagenes4;
-    
-    
-    
-    
-    int index1 = 0; 
-    int index2 = 0; 
+
+    private ServicioSnacksArchivo servicioSnacks = new ServicioSnacksArchivo();
+    private DefaultTableModel modelDisponibles = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Todas las celdas no editables
+        }
+    };
+
+    private DefaultTableModel modelSeleccionados = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    private IservicioCompra servicioCompra;
+    private IservicioCliente servicioCliente;
+
+    int index1 = 0;
+    int index2 = 0;
     int index3 = 0;
     int index4 = 0;
-    
-    public Cliente() {
-        
+
+    public Cliente(IservicioSnakcs servicioSnacks, IservicioCompra servicioCompra, IservicioCliente servicioCliente) {
         initComponents();
+        inicializarComponentesPersonalizados();
+        this.servicioCompra = servicioCompra;
+        this.servicioCliente = servicioCliente;
+    }
+
+    // Constructor sin parámetros para compatibilidad con el main
+    public Cliente() {
+        initComponents();
+        inicializarComponentesPersonalizados();
+    }
+
+    // MOVER TODO EL CÓDIGO PERSONALIZADO A ESTE MÉTODO
+    private void inicializarComponentesPersonalizados() {
         iniciarCarrusel();
         this.setResizable(true);
         this.setLocationRelativeTo(null);
-         
+        
+        // Configurar modelos de tabla
+        modelDisponibles.setColumnIdentifiers(new String[] { "ID", "Producto", "Precio", "Disponibles" });
+        modelSeleccionados.setColumnIdentifiers(new String[] { "ID", "Producto", "Precio", "Cantidad" });
 
+        JTB_E_disponibles_E_seleccionados.setModel(modelDisponibles);
 
+        // Configurar botones
+        Jbtn_agregar_p.addActionListener(e -> agregarSnackALaCompra());
+        JBTN_Eliminar_P.addActionListener(e -> eliminarSnackDeLaCompra());
+        
+        // Configurar click en Report Client
+        JLB_Report_Client.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                abrirReporteCliente();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Efecto hover - cambiar color cuando pase el mouse
+                JLB_Report_Client.setForeground(new Color(200, 200, 255));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Restaurar color original
+                JLB_Report_Client.setForeground(Color.WHITE);
+            }
+        });
+
+        // Cargar datos iniciales
+        cargarSnacksDisponibles();
     }
-    
+
     // Método para cargar y cambiar imágenes automáticamente
     private void iniciarCarrusel() {
-        //
+        // Imágenes para el primer JLabel
         imagenes = new ImageIcon[] {
-        new ImageIcon(getClass().getResource("/recta/recta1.png")),
-        new ImageIcon(getClass().getResource("/recta/recta2.png")),
-        new ImageIcon(getClass().getResource("/recta/recta3.png"))
-    };
+                new ImageIcon(getClass().getResource("/recta/recta1.png")),
+                new ImageIcon(getClass().getResource("/recta/recta2.png")),
+                new ImageIcon(getClass().getResource("/recta/recta3.png"))
+        };
 
-    // Imágenes para el segundo JLabel
-    imagenes2 = new ImageIcon[] {
-        new ImageIcon(getClass().getResource("/r/r1.png")),
-        new ImageIcon(getClass().getResource("/r/r2.jpg")),
-        new ImageIcon(getClass().getResource("/r/r3.png"))
-    };
+        // Imágenes para el segundo JLabel
+        imagenes2 = new ImageIcon[] {
+                new ImageIcon(getClass().getResource("/r/r1.png")),
+                new ImageIcon(getClass().getResource("/r/r2.jpg")),
+                new ImageIcon(getClass().getResource("/r/r3.png"))
+        };
 
-    // Imágenes para el tercer JLabel
-    imagenes3 = new ImageIcon[] {
-        new ImageIcon(getClass().getResource("/img/p1.jpg")),
-        new ImageIcon(getClass().getResource("/img/p2.png")),
-        new ImageIcon(getClass().getResource("/img/p3.png"))
-    };
-    // Imágenes para el tercer JLabel
-    imagenes4 = new ImageIcon[] {
-        new ImageIcon(getClass().getResource("/y/t3.jpg")),
-        new ImageIcon(getClass().getResource("/y/t2.png")),
-        new ImageIcon(getClass().getResource("/y/t1.png"))
-    };
-
-    // Timer para Label1
-    new Timer(5000, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            JLB_imagen_1.setIcon(resizeImage(imagenes[index1], JLB_imagen_1));
-            index1 = (index1 + 1) % imagenes.length;
-        }
-    }).start();
-
-    // Timer para Label2
-    new Timer(3500, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            JLB_imagen_2.setIcon(resizeImage(imagenes2[index2], JLB_imagen_2));
-            index2 = (index2 + 1) % imagenes2.length;
-        }
-    }).start();
-
-    // Timer para Label3
-    new Timer(3500, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            JLB_imagen_3.setIcon(resizeImage(imagenes3[index3], JLB_imagen_3));
-            index3 = (index3 + 1) % imagenes3.length;
-        }
-    }).start();
-    
-     // Timer para Label3
-    new Timer(3500, new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            JLB_imagen_4.setIcon(resizeImage(imagenes3[index4], JLB_imagen_4));
-            index4 = (index4 + 1) % imagenes4.length;
-        }
-    }).start();
-    }
-    
-    
-    private Icon resizeImage(ImageIcon originalIcon, JLabel label) {
-    Image image = originalIcon.getImage();
-    int width = label.getWidth();
-    int height = label.getHeight();
-    
-    // Escalar la imagen al tamaño del JLabel
-    Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    return new ImageIcon(scaledImage);
-}
+        // Imágenes para el tercer JLabel
+        imagenes3 = new ImageIcon[] {
+                new ImageIcon(getClass().getResource("/img/p1.jpg")),
+                new ImageIcon(getClass().getResource("/img/p2.png")),
+                new ImageIcon(getClass().getResource("/img/p3.png"))
+        };
         
+        // Imágenes para el cuarto JLabel
+        imagenes4 = new ImageIcon[] {
+                new ImageIcon(getClass().getResource("/y/t3.jpg")),
+                new ImageIcon(getClass().getResource("/y/t2.png")),
+                new ImageIcon(getClass().getResource("/y/t1.png"))
+        };
 
-       
+        // Timer para Label1
+        new Timer(5000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JLB_imagen_1.setIcon(resizeImage(imagenes[index1], JLB_imagen_1));
+                index1 = (index1 + 1) % imagenes.length;
+            }
+        }).start();
+
+        // Timer para Label2
+        new Timer(3500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JLB_imagen_2.setIcon(resizeImage(imagenes2[index2], JLB_imagen_2));
+                index2 = (index2 + 1) % imagenes2.length;
+            }
+        }).start();
+
+        // Timer para Label3
+        new Timer(3500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JLB_imagen_3.setIcon(resizeImage(imagenes3[index3], JLB_imagen_3));
+                index3 = (index3 + 1) % imagenes3.length;
+            }
+        }).start();
+
+        // Timer para Label4 - CORREGIR: usar imagenes4 en lugar de imagenes3
+        new Timer(3500, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JLB_imagen_4.setIcon(resizeImage(imagenes4[index4], JLB_imagen_4));
+                index4 = (index4 + 1) % imagenes4.length;
+            }
+        }).start();
+    }
+
+    private Icon resizeImage(ImageIcon originalIcon, JLabel label) {
+        Image image = originalIcon.getImage();
+        int width = label.getWidth();
+        int height = label.getHeight();
+
+        // Escalar la imagen al tamaño del JLabel
+        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
@@ -478,40 +538,118 @@ public class Cliente extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void JTB_E_disponibles_E_seleccionadosAncestorRemoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_JTB_E_disponibles_E_seleccionadosAncestorRemoved
+    // MÉTODOS PERSONALIZADOS - FUERA DEL CÓDIGO GENERADO
+    private void cargarSnacksDisponibles() {
+        modelDisponibles.setRowCount(0);
+        servicioSnacks.getSnacks().cellSet().forEach(cell -> {
+            Snack snack = cell.getValue();
+            modelDisponibles.addRow(new Object[] {
+                    snack.getIdSnack(),
+                    snack.getNombre(),
+                    snack.getPrecio(),
+                    snack.getCantidad()
+            });
+        });
+    }
+
+    private void agregarSnackALaCompra() {
+    int filaSeleccionada = JTB_E_disponibles_E_seleccionados.getSelectedRow();
+    if (filaSeleccionada >= 0) {
+        try {
+            int id = (int) modelDisponibles.getValueAt(filaSeleccionada, 0);
+            Snack snackComprado = servicioSnacks.comprarSnackJSON(id); 
+            
+            // Actualizar modelo de seleccionados
+            modelSeleccionados.addRow(new Object[]{
+                snackComprado.getIdSnack(),
+                snackComprado.getNombre(),
+                snackComprado.getPrecio(),
+                1
+            });
+            
+            
+            // Actualizar modelo de disponibles
+            int nuevaCantidad = (int) modelDisponibles.getValueAt(filaSeleccionada, 3) - 1;
+            modelDisponibles.setValueAt(nuevaCantidad, filaSeleccionada, 3);
+            
+            JOptionPane.showMessageDialog(this, "¡Snack añadido al carrito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecciona un snack", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+}
+    private void eliminarSnackDeLaCompra() {
+        int filaSeleccionada = JTB_E_disponibles_E_seleccionados.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            int id = (int) modelSeleccionados.getValueAt(filaSeleccionada, 0);
+            servicioSnacks.getSnacks().row(id).values().forEach(snack -> {
+                snack.setCantidad(snack.getCantidad() + 1);
+            });
+            modelSeleccionados.removeRow(filaSeleccionada);
+            actualizarDisponibilidad(id, 1);
+        }
+    }
+
+    private void actualizarDisponibilidad(int id, int cambio) {
+        for (int i = 0; i < modelDisponibles.getRowCount(); i++) {
+            if ((int) modelDisponibles.getValueAt(i, 0) == id) {
+                int nuevaCantidad = (int) modelDisponibles.getValueAt(i, 3) + cambio;
+                modelDisponibles.setValueAt(nuevaCantidad, i, 3);
+                break;
+            }
+        }
+        servicioSnacks.actualizarArchivo();
+    }
+    
+    // Método para abrir la vista de reportes
+    private void abrirReporteCliente() {
+        try {
+            // Crear y mostrar la ventana de reportes
+            ReporteCliente reporteVentana = new ReporteCliente();
+            reporteVentana.setVisible(true);
+            
+            // Opcional: Cerrar la ventana actual o mantenerla abierta
+            // this.dispose(); // Descomenta si quieres cerrar la ventana actual
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Error al abrir la ventana de reportes: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    // EVENTOS GENERADOS POR NETBEANS
+    private void JTB_E_disponibles_E_seleccionadosAncestorRemoved(javax.swing.event.AncestorEvent evt) {
+        servicioSnacks.ObtenerSnacks();
+        cargarSnacksDisponibles();
+    }
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTB_E_disponibles_E_seleccionadosAncestorRemoved
+    }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowIconified(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
+    }
 
-    private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowIconified
-
-    private void jbtn_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtn_configActionPerformed
+    private void jbtn_configActionPerformed(java.awt.event.ActionEvent evt) {
         new config().setVisible(true);
         this.dispose();
-        
-
-
-
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtn_configActionPerformed
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -528,7 +666,6 @@ public class Cliente extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -539,7 +676,7 @@ public class Cliente extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JPanel Bg;
     private javax.swing.JButton JBTN_Eliminar_P;
     private javax.swing.JLabel JLB_Report_Client;
@@ -570,5 +707,5 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator_user;
     private javax.swing.JButton jbtn_config;
     private javax.swing.JSeparator separator_busqueda;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

@@ -13,7 +13,7 @@
       "precio": 26.99,
       "nombre": "Combat Crunch Protein Bar",
       "idSnack": 2,
-      "cantidad": 4,
+      "cantidad": 2,
       "tipo": "barra proteica"
     }
   },
@@ -22,7 +22,7 @@
       "precio": 22.99,
       "nombre": "Quest Protein Chips",
       "idSnack": 3,
-      "cantidad": 7,
+      "cantidad": 6,
       "tipo": "snack salado"
     }
   },
@@ -40,7 +40,7 @@
       "precio": 29.99,
       "nombre": "Essential AMINO ENERGY",
       "idSnack": 5,
-      "cantidad": 30,
+      "cantidad": 28,
       "tipo": "suplemento"
     }
   },
@@ -49,7 +49,7 @@
       "precio": 39.99,
       "nombre": "MyProtein Clear Whey Isolate",
       "idSnack": 6,
-      "cantidad": 20,
+      "cantidad": 11,
       "tipo": "bebida proteica"
     }
   },
@@ -58,7 +58,7 @@
       "precio": 24.99,
       "nombre": "Protein2o Protein Water",
       "idSnack": 7,
-      "cantidad": 12,
+      "cantidad": 10,
       "tipo": "bebida proteica"
     }
   },
@@ -67,7 +67,7 @@
       "precio": 19.99,
       "nombre": "Shrewd Food Protein Puffs",
       "idSnack": 8,
-      "cantidad": 8,
+      "cantidad": 7,
       "tipo": "snack salado"
     }
   },
@@ -76,7 +76,7 @@
       "precio": 19.99,
       "nombre": "Optimum Nutrition Creatina Monohidratada",
       "idSnack": 9,
-      "cantidad": 30,
+      "cantidad": 28,
       "tipo": "suplemento"
     }
   },
@@ -85,7 +85,7 @@
       "precio": 34.99,
       "nombre": "ISOPURE Protein Coffee",
       "idSnack": 10,
-      "cantidad": 15,
+      "cantidad": 12,
       "tipo": "bebida proteica"
     }
   },
@@ -103,7 +103,7 @@
       "precio": 42.99,
       "nombre": "C4 Ultimate Pre-Workout",
       "idSnack": 12,
-      "cantidad": 20,
+      "cantidad": 19,
       "tipo": "suplemento"
     }
   },

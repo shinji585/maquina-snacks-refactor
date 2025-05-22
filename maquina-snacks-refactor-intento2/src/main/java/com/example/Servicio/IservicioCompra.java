@@ -2,8 +2,10 @@ package com.example.Servicio;
 
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import com.example.Dominio.Compra;
+import com.example.Dominio.Snack;
 import com.google.common.collect.Table;
 
 public interface IservicioCompra {
@@ -46,4 +48,7 @@ public interface IservicioCompra {
 
     // creamos un metodo que nos permita comprar por dropset dependiendo de si el usuario quiere o no 
     Compra comprarDropset(Integer idCliente) throws Exception;
+
+    Snack guardarCompras();
+    public Map<Integer, Compra> obtenerTodasLasComprasComoMapa() ;
 }
